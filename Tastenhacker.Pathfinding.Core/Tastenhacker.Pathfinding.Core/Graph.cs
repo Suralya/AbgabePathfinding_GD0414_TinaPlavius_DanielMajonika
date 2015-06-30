@@ -54,9 +54,9 @@ namespace Tastenhacker.Pathfinding.Core
         /// Create new vertex and add it to the graph
         /// </summary>
         /// <returns>Newly created vertex</returns>
-        public Vertex<V> CreateVertex(V _data, string fName = null)
+        public Vertex<V> CreateVertex(V data, string fName = null)
         {
-            Vertex<V> v = new ExtendedVertex<V>(_data, fName);
+            Vertex<V> v = new ExtendedVertex<V>(data, fName);
             AddVertex(v);
             return v;
         }
@@ -70,7 +70,7 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Returns the fname given to the graph
+        /// Returns the name given to the graph
         /// </summary>
         public string Name
         {
@@ -176,9 +176,9 @@ namespace Tastenhacker.Pathfinding.Core
                             markedVertexCount++;
 
                             vertex.Marked = true;
-                            List<Edge<E, V>> EdgeList = GetConnectedEdges(vertex);
+                            List<Edge<E, V>> edgeList = GetConnectedEdges(vertex);
 
-                            foreach (Edge<E, V> edge in EdgeList)
+                            foreach (Edge<E, V> edge in edgeList)
                             {
                                 edge.Marked = true;
 
@@ -295,16 +295,16 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         public void UnmarkAllObjects()
         {
-            List<Vertex<V>> VertexList = GetVertices();
+            List<Vertex<V>> vertexList = GetVertices();
 
-            foreach (Vertex<V> vertex in VertexList)
+            foreach (Vertex<V> vertex in vertexList)
             {
                 vertex.Marked = false;
             }
 
-            List<Edge<E, V>> EdgeList = GetEdges();
+            List<Edge<E, V>> edgeList = GetEdges();
 
-            foreach (Edge<E, V> edge in EdgeList)
+            foreach (Edge<E, V> edge in edgeList)
             {
                 edge.Marked = false;
             }
@@ -368,14 +368,14 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>Orderd list of vertices examined while searching for goal breadth first</returns>
         public List<Vertex<V>> BreadthFirstSearch(Vertex<V> root, Vertex<V> goal)
         {
-            List<Vertex<V>> VertexList = new List<Vertex<V>>();
+            List<Vertex<V>> vertexList = new List<Vertex<V>>();
             Dictionary<Vertex<V>, bool> mark = vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
             Queue<Vertex<V>> queue = new Queue<Vertex<V>>();
 
             queue.Enqueue(root);
 
-            VertexList.Add(root);
+            vertexList.Add(root);
 
             mark[root] = true;
 
@@ -385,7 +385,7 @@ namespace Tastenhacker.Pathfinding.Core
 
                 if (vertex == goal)
                 {
-                    return VertexList;
+                    return vertexList;
                 }
 
                 List<Edge<E, V>> connectedEdges = GetConnectedEdges(vertex);
@@ -394,10 +394,10 @@ namespace Tastenhacker.Pathfinding.Core
                 {
                     mark[target] = true;
                     queue.Enqueue(target);
-                    VertexList.Add(target);
+                    vertexList.Add(target);
                 }
             }
-            return VertexList;
+            return vertexList;
         }
 
         /// <summary>
@@ -410,15 +410,15 @@ namespace Tastenhacker.Pathfinding.Core
         {
             Dictionary<Vertex<V>, bool> mark = vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
-            List<Vertex<V>> VetexList = new List<Vertex<V>> {root};
+            List<Vertex<V>> vertexList = new List<Vertex<V>> {root};
 
             List<Vertex<V>> neighbours = GetNeighbourVertices(root);
 
-            foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref mark, ref VetexList)))
+            foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref mark, ref vertexList)))
             {
             }
 
-            return VetexList;
+            return vertexList;
         }
 
 

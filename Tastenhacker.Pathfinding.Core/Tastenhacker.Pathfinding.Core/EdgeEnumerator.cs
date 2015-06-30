@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Tastenhacker.Pathfinding.Core
 {
-    public class EdgeEnumerator<E,V> : IEnumerator
+    public class EdgeEnumerator<E,V> : IEnumerator, IDisposable
     {
         private List<Edge<E,V>> edges;
         private int _position = -1;
