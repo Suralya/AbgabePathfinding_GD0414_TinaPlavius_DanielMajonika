@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tastenhacker.Pathfinding.Core
 {
@@ -63,17 +64,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of incoming connected edge ids</returns>
         public List<UInt64> GetIncomingEdgeIds(Vertex<V> vertex)
         {
-            List<UInt64> list = new List<UInt64>();
-
-            foreach (KeyValuePair<UInt64, Edge<E, V>> pair in edges)
-            {
-                if (pair.Value.TargetVertex == vertex)
-                {
-                    list.Add(pair.Value.ID);
-                }
-            }
-
-            return list;
+            return (from pair in edges where pair.Value.TargetVertex == vertex select pair.Value.ID).ToList();
         }
 
         /// <summary>
@@ -83,17 +74,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of incoming edges</returns>
         public List<Edge<E, V>> GetIncomingEdges(Vertex<V> vertex)
         {
-            List<Edge<E, V>> fEdges = new List<Edge<E, V>>();
-
-            foreach (KeyValuePair<UInt64, Edge<E, V>> pair in edges)
-            {
-                if (pair.Value.TargetVertex == vertex)
-                {
-                    fEdges.Add(pair.Value);
-                }
-            }
-
-            return fEdges;
+            return (from pair in edges where pair.Value.TargetVertex == vertex select pair.Value).ToList();
         }
 
         /// <summary>
@@ -103,17 +84,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of all outgoing edges</returns>
         public List<Edge<E, V>> GetOutgoingEdges(Vertex<V> vertex)
         {
-            List<Edge<E, V>> fEdges = new List<Edge<E, V>>();
-
-            foreach (KeyValuePair<UInt64, Edge<E, V>> pair in edges)
-            {
-                if (pair.Value.BaseVertex == vertex)
-                {
-                    fEdges.Add(pair.Value);
-                }
-            }
-
-            return fEdges;
+            return (from pair in edges where pair.Value.BaseVertex == vertex select pair.Value).ToList();
         }
 
         /// <summary>
@@ -203,8 +174,8 @@ namespace Tastenhacker.Pathfinding.Core
             }
             foreach (Vertex<V> v in fVertices)
             {
-                List<Edge<E, V>> Outgoing = GetOutgoingEdges(v);
-                foreach(Edge<E, V> e in Outgoing)
+                List<Edge<E, V>> outgoing = GetOutgoingEdges(v);
+                foreach(Edge<E, V> e in outgoing)
                 {
                     int Iv = fVertices.IndexOf(v);
                     int Ie = fVertices.IndexOf(e.TargetVertex);

@@ -24,11 +24,11 @@ namespace Tastenhacker.Pathfinding.Core
 			return ID.GetHashCode();
 		}
 
-		protected int degreeIn, degreeOut;
-		private static UInt64 idGenerator;
+		protected int DegreeIn, DegreeOut;
+		private static UInt64 _idGenerator;
 
-		public T data; // zugriff auf die daten des types
-		public bool marked;
+		public T Data; // zugriff auf die daten des types
+		public bool Marked;
 		public int Tag;
         public int PathCost;
  
@@ -37,7 +37,7 @@ namespace Tastenhacker.Pathfinding.Core
 		/// </summary>
 		public int Degree
 		{
-			get { return degreeIn + degreeOut; }
+			get { return DegreeIn + DegreeOut; }
 		}
 
 		public override bool Equals(object obj)
@@ -52,7 +52,7 @@ namespace Tastenhacker.Pathfinding.Core
 		/// </summary>
 		public int InDegree
 		{
-			get { return degreeIn; }
+			get { return DegreeIn; }
 		}
 
 		/// <summary>
@@ -60,7 +60,7 @@ namespace Tastenhacker.Pathfinding.Core
 		/// </summary>
 		public int OutDegree
 		{
-			get { return degreeOut; }
+			get { return DegreeOut; }
 		}
 
 		/// <summary>
@@ -87,15 +87,15 @@ namespace Tastenhacker.Pathfinding.Core
 		/// <summary>
 		/// Create new extended vertex (to be used internally)
 		/// </summary>
-		/// <param name="_data"></param>
+		/// <param name="data"></param>
 		/// <param name="name">Name associated with the vertex (generated automatically if null)</param>
-		public Vertex(T _data, string name = null)
+		public Vertex(T data, string name = null)
 		{
-			degreeIn = 0;
-			degreeOut = 0;
-			ID = ++idGenerator;
-			marked = false;
-			data = _data;
+			DegreeIn = 0;
+			DegreeOut = 0;
+			ID = ++_idGenerator;
+			Marked = false;
+			Data = data;
 
 			if (name == null)
 			{

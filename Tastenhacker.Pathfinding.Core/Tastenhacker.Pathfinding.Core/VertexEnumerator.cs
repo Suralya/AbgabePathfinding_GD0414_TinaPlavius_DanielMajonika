@@ -12,12 +12,12 @@ namespace Tastenhacker.Pathfinding.Core
 {
     public class VertexEnumerator<V> : IEnumerator
     {
-        private readonly List<Vertex<V>> vertices;
-        private int position = -1;
+        private readonly List<Vertex<V>> _vertices;
+        private int _position = -1;
 
         public VertexEnumerator(List<Vertex<V>> vertices)
         {
-            this.vertices = vertices;
+            this._vertices = vertices;
         }
 
         public object Current
@@ -26,7 +26,7 @@ namespace Tastenhacker.Pathfinding.Core
             {
                 try
                 {
-                    return vertices[position];
+                    return _vertices[_position];
                 }
                 catch (IndexOutOfRangeException)
                 {
@@ -37,12 +37,12 @@ namespace Tastenhacker.Pathfinding.Core
 
         public bool MoveNext()
         {
-            return (++position < vertices.Count);
+            return (++_position < _vertices.Count);
         }
 
         public void Reset()
         {
-            position = -1;
+            _position = -1;
         }
 
         public void Dispose()

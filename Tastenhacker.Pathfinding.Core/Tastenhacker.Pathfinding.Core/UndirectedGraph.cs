@@ -103,7 +103,7 @@ namespace Tastenhacker.Pathfinding.Core
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe) && !vertexFilter(notMe))
                     {
                         AStarVertex<V> neigbour = AStarVertex<V>.Create(notMe);
-                        neigbour.origin = self; //self.vertex
+                        neigbour.Origin = self; //self.vertex
                         neigbour.G = self.G + edge.Weight;
                         neigbour.H = heuristicDelegate(self.vertex, finish, this);
                         neigbour.vertex.PathCost = edge.Weight;
@@ -120,7 +120,7 @@ namespace Tastenhacker.Pathfinding.Core
                                 if (a.F > self.F + edge.Weight) // a.G > self.G + edge.Weight
                                 {
                                     a.vertex.PathCost = edge.Weight;
-                                    a.origin = self; //self.vertex
+                                    a.Origin = self; //self.vertex
                                 }
                             }
                         }
@@ -136,7 +136,7 @@ namespace Tastenhacker.Pathfinding.Core
             {
                 //add to path
                 path.Add(pathFinish.vertex);
-                pathFinish = pathFinish.origin;
+                pathFinish = pathFinish.Origin;
             }
 
             //TODO path!
@@ -186,7 +186,7 @@ namespace Tastenhacker.Pathfinding.Core
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe))
                     {
                         AStarVertex<V> neigbour = AStarVertex<V>.Create(notMe);
-                        neigbour.origin = self; //self.vertex
+                        neigbour.Origin = self; //self.vertex
                         neigbour.G = self.G + edge.Weight;
                         neigbour.H = 0;
 
@@ -202,7 +202,7 @@ namespace Tastenhacker.Pathfinding.Core
                             {
                                 if (a.F > self.F + edge.Weight)
                                 {
-                                    a.origin = self; //self.vertex
+                                    a.Origin = self; //self.vertex
                                 }
                             }
                         }
@@ -218,7 +218,7 @@ namespace Tastenhacker.Pathfinding.Core
             {
                 //add to path
                 path.Add(pathFinish.vertex);
-                pathFinish = pathFinish.origin;
+                pathFinish = pathFinish.Origin;
             }
 
             //TODO path!

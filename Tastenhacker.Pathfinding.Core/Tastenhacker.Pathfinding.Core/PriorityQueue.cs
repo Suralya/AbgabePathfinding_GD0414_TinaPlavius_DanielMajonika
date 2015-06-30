@@ -15,111 +15,106 @@ namespace Tastenhacker.Pathfinding.Core
 
     public class PriorityQueue<T> : IList<T>
     {
-        private readonly List<T> items = new List<T>();
-        private readonly IComparer<T> comparer;
-        private readonly IKeyDecreaser<T> decreaser;
+        private readonly List<T> _items = new List<T>();
+        private readonly IComparer<T> _comparer;
+        private readonly IKeyDecreaser<T> _decreaser;
 
         public PriorityQueue(IComparer<T> comparer, IKeyDecreaser<T> decreaser)
         {
-            this.comparer = comparer;
-            this.decreaser = decreaser;
+            this._comparer = comparer;
+            this._decreaser = decreaser;
         }
 
-        public void insert(T item)
+        public void Insert(T item)
         {
-            items.Add(item);
-            items.Sort(comparer);            
+            _items.Add(item);
+            _items.Sort(_comparer);            
         }
 
-        public T accessMin()
+        public T AccessMin()
         {
-            return items.Count == 0 ? default(T) : items[0];
+            return _items.Count == 0 ? default(T) : _items[0];
         }
 
-        public T extractMin()
+        public T ExtractMin()
         {
-            if (items.Count == 0)
+            if (_items.Count == 0)
                 return default(T);
-            T minItem = items[0];
-            items.Remove(minItem);
+            T minItem = _items[0];
+            _items.Remove(minItem);
             return minItem;
         }
 
-        public void decreaseKey(T item, int amount = -1)
+        public void DecreaseKey(T item, int amount = -1)
         {
-            decreaser.decreaseKey(item, amount);
+            _decreaser.decreaseKey(item, amount);
         }
 
-        public bool remove(T item)
-        {
-            return items.Remove(item);
-        }
-
-        public void merge(IList<T> source)
+        public void Merge(IList<T> source)
         {
             foreach (T item in source)
             {
-                if (!items.Contains(item))
+                if (!_items.Contains(item))
                 {
-                    insert(item);
+                    Insert(item);
                 }
             }
-            items.Sort(comparer);
+            _items.Sort(_comparer);
         }
 
         public int IndexOf(T item)
         {
-            return items.IndexOf(item);
+            return _items.IndexOf(item);
         }
 
         public void Insert(int index, T item)
         {
-            items.Insert(index, item);
-            items.Sort(comparer);
+            _items.Insert(index, item);
+            _items.Sort(_comparer);
         }
 
         public void RemoveAt(int index)
         {
-            items.RemoveAt(index);
+            _items.RemoveAt(index);
         }
 
         public T this[int index]
         {
             get
             {
-                return items[index];
+                return _items[index];
             }
             set
             {
-                items[index] = value;
-                items.Sort(comparer);
+                _items[index] = value;
+                _items.Sort(_comparer);
             }
         }
 
         public void Add(T item)
         {
-            insert(item);
+            Insert(item);
         }
 
         public void Clear()
         {
-            items.Clear();
+            _items.Clear();
         }
 
         public bool Contains(T item)
         {
-            return items.Contains(item);
+            return _items.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            items.CopyTo(array, arrayIndex);
-            items.Sort(comparer);
+            _items.CopyTo(array, arrayIndex);
+            _items.Sort(_comparer);
         }
 
         public int Count
         {
-            get { return items.Count; }
+            get { return _items.Count; }
         }
 
         public bool IsReadOnly
@@ -129,17 +124,17 @@ namespace Tastenhacker.Pathfinding.Core
 
         public bool Remove(T item)
         {
-            return items.Remove(item);
+            return _items.Remove(item);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return items.GetEnumerator();
+            return _items.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return items.GetEnumerator();
+            return _items.GetEnumerator();
         }
     }
 

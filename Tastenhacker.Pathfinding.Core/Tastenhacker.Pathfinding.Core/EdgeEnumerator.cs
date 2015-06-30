@@ -13,7 +13,7 @@ namespace Tastenhacker.Pathfinding.Core
     public class EdgeEnumerator<E,V> : IEnumerator
     {
         private List<Edge<E,V>> edges;
-        private int position = -1;
+        private int _position = -1;
 
         public EdgeEnumerator(List<Edge<E,V>> edges)
         {
@@ -26,7 +26,7 @@ namespace Tastenhacker.Pathfinding.Core
             {
                 try
                 {
-                    return edges[position];
+                    return edges[_position];
                 }
                 catch (IndexOutOfRangeException)
                 {
@@ -37,12 +37,12 @@ namespace Tastenhacker.Pathfinding.Core
 
         public bool MoveNext()
         {
-            return (++position < edges.Count);
+            return (++_position < edges.Count);
         }
 
         public void Reset()
         {
-            position = -1;
+            _position = -1;
         }
 
         public void Dispose()

@@ -17,7 +17,7 @@ namespace Tastenhacker.Pathfinding.Core
     { 
         public int G, H;
         public Vertex<V> vertex;
-        public AStarVertex<V> origin;
+        public AStarVertex<V> Origin;
         public int F
         {
             get { return G + H; }
@@ -25,7 +25,7 @@ namespace Tastenhacker.Pathfinding.Core
 
         public static AStarVertex<V> Create(Vertex<V> v)
         {
-            AStarVertex<V> vertex = new AStarVertex<V> {vertex = v, origin = null, G = 0, H = 0};
+            AStarVertex<V> vertex = new AStarVertex<V> {vertex = v, Origin = null, G = 0, H = 0};
 
             return vertex;
         }

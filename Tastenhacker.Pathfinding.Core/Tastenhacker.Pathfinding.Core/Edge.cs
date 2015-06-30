@@ -11,15 +11,15 @@ namespace Tastenhacker.Pathfinding.Core
     /// <summary>
     /// Represents connection between two vertices
     /// </summary>
-    /// <typeparam name="E">Type for user data associated with edges</typeparam>
-    /// <typeparam name="V">Type for user data associated with vertices</typeparam>
+    /// <typeparam _name="E">Type for user data associated with edges</typeparam>
+    /// <typeparam _name="V">Type for user data associated with vertices</typeparam>
     public abstract class Edge<E, V> : IComparable
     {
         private readonly UInt64 id;
         private static UInt64 idGenerator = 0;
-        public string name;
+        private string _name;
 
-        public bool marked;
+        public bool Marked;
 
         /// <summary>
         /// Weight of a specific edge, e.g. costs to travel this edge
@@ -63,35 +63,35 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Returns the name given to the edge
+        /// Returns the _name given to the edge
         /// </summary>
         public string Name
         {
-            get { return name; }
+            get { return _name; }
         }
 
         /// <summary>
         /// Create new edge
         /// </summary>
-        /// <param name="baseVertex">First vertex</param>
-        /// <param name="targetVertex">Second vertex</param>
-        /// <param name="weight">Edge weight</param>
-        /// <param name="name">Edge name</param>
+        /// <param _name="baseVertex">First vertex</param>
+        /// <param _name="targetVertex">Second vertex</param>
+        /// <param _name="weight">Edge weight</param>
+        /// <param _name="name">Edge _name</param>
         protected Edge(Vertex<V> baseVertex, Vertex<V> targetVertex, int weight = 0, string name = null)
         {
             BaseVertex = baseVertex;
             TargetVertex = targetVertex;
             Weight = weight;
             id = ++idGenerator;
-            marked = false;
+            Marked = false;
 
-            this.name = name ?? "edge-" + ID;
+            this._name = name ?? "edge-" + ID;
         }
 
         /// <summary>
         /// Check if edge has the given ID
         /// </summary>
-        /// <param name="_ID">ID to check</param>
+        /// <param _name="_ID">ID to check</param>
         /// <returns></returns>
         public bool HasID(UInt64 _ID)
         {
@@ -106,7 +106,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Checks for value equality
         /// </summary>
-        /// <param name="obj">Object to check against</param>
+        /// <param _name="obj">Object to check against</param>
         /// <returns>true if obj is of same type and value equal</returns>
         public override bool Equals(object obj)
         {
@@ -123,7 +123,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Checks for value equality
         /// </summary>
-        /// <param name="edge">Edge to check against</param>
+        /// <param _name="edge">Edge to check against</param>
         /// <returns>true if base vertices and target vertices are the same</returns>
         public virtual bool Equals(Edge<E, V> edge)
         {

@@ -17,8 +17,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         new public int Degree
         {
-            get { return degreeIn + degreeOut; }
-            set { degreeIn = 0; degreeOut = value; }
+            get { return DegreeIn + DegreeOut; }
+            set { DegreeIn = 0; DegreeOut = value; }
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         new public int InDegree
         {
-            get { return degreeIn; }
-            set { degreeIn = value; }
+            get { return DegreeIn; }
+            set { DegreeIn = value; }
         }
 
         /// <summary>
@@ -35,16 +35,16 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         new public int OutDegree
         {
-            get { return degreeOut; }
-            set { degreeOut = value; }
+            get { return DegreeOut; }
+            set { DegreeOut = value; }
         }
 
         /// <summary>
         /// Create new extended vertex (to be used internally)
         /// </summary>
-        /// <param name="_data"></param>
+        /// <param name="data"></param>
         /// <param name="name">Name associated with the vertex (generated automatically if null)</param>
-        public ExtendedVertex(T _data, string name = null) : base(_data, name)
+        public ExtendedVertex(T data, string name = null) : base(data, name)
         {
         }
     }

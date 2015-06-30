@@ -168,19 +168,19 @@ namespace Tastenhacker.Pathfinding.Core
 
                 foreach (Vertex<V> vertex in vertexList)
                 {
-                    if (vertex.marked == false)
+                    if (vertex.Marked == false)
                     {
                         if (vertex.InDegree == 0 || vertex.OutDegree == 0)
                         {
                             lookAtVertices = true;
                             markedVertexCount++;
 
-                            vertex.marked = true;
+                            vertex.Marked = true;
                             List<Edge<E, V>> EdgeList = GetConnectedEdges(vertex);
 
                             foreach (Edge<E, V> edge in EdgeList)
                             {
-                                edge.marked = true;
+                                edge.Marked = true;
 
                                 if (vertex == edge.BaseVertex)
                                 {
@@ -299,14 +299,14 @@ namespace Tastenhacker.Pathfinding.Core
 
             foreach (Vertex<V> vertex in VertexList)
             {
-                vertex.marked = false;
+                vertex.Marked = false;
             }
 
             List<Edge<E, V>> EdgeList = GetEdges();
 
             foreach (Edge<E, V> edge in EdgeList)
             {
-                edge.marked = false;
+                edge.Marked = false;
             }
         }
 
@@ -478,7 +478,7 @@ namespace Tastenhacker.Pathfinding.Core
                 {
                     mark.Remove(vertex);
 
-                    list.Add(graph.CreateVertex(vertex.data, vertex.Name));
+                    list.Add(graph.CreateVertex(vertex.Data, vertex.Name));
                 }
 
                 foreach (Vertex<V> vertex in result)
