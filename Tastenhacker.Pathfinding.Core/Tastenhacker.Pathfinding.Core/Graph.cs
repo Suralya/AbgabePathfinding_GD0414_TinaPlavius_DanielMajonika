@@ -21,11 +21,11 @@ namespace Tastenhacker.Pathfinding.Core
     public class PathNotFoundException : GraphException {}
     public abstract class Graph<E,V> : IEnumerable
     {
-        protected Dictionary<UInt64, Edge<E, V>> edges;
-        protected Dictionary<UInt64, Vertex<V>> vertices;
-        private readonly UInt64 id;
+        protected Dictionary<UInt64, Edge<E, V>> Edges;
+        protected Dictionary<UInt64, Vertex<V>> Vertices;
+        private readonly UInt64 _id;
         private static UInt64 idGenerator = 0;
-        private readonly string name;
+        private readonly string _name;
 
 
         /// <summary>
@@ -34,11 +34,11 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="name">Name associated with the graph (generated automatically if null)</param>
         public Graph(string name = null)
         {
-            edges = new Dictionary<UInt64, Edge<E, V>>();
-            vertices = new Dictionary<UInt64, Vertex<V>>();
-            id = ++idGenerator;
+            Edges = new Dictionary<UInt64, Edge<E, V>>();
+            Vertices = new Dictionary<UInt64, Vertex<V>>();
+            _id = ++idGenerator;
 
-            this.name = name ?? "graph-" + ID;
+            this._name = name ?? "graph-" + ID;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <todo>handle exceptions</todo>
         protected void AddVertex(Vertex<V> v)
         {
-            vertices.Add(v.ID, v);
+            Vertices.Add(v.ID, v);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         public int VertexCount
         {
-            get { return vertices.Count; }
+            get { return Vertices.Count; }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         public string Name
         {
-            get { return name; }
+            get { return _name; }
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         public UInt64 ID
         {
-            get { return id; }
+            get { return _id; }
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="vertex">Vertex to check</param>
         public bool VertexExists(Vertex<V> vertex)
         {
-            return vertices.ContainsKey(vertex.ID);
+            return Vertices.ContainsKey(vertex.ID);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="edge">Edge to check</param>
         public bool EdgeExists(Edge<E, V> edge)
         {
-            return edges.Values.Any(element => element.Equals(edge));
+            return Edges.Values.Any(element => element.Equals(edge));
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of connected edges</returns>
         public List<Edge<E,V>> GetConnectedEdges(Vertex<V> vertex)
         {
-            return (from pair in edges where pair.Value.BaseVertex == vertex || pair.Value.TargetVertex == vertex select pair.Value).ToList();
+            return (from pair in Edges where pair.Value.BaseVertex.Equals(vertex) || pair.Value.TargetVertex.Equals(vertex) select pair.Value).ToList();
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Tastenhacker.Pathfinding.Core
             else
                 connectedEdges = GetConnectedEdges(vertex).Where(e => !edgeFilter(e)).ToList();
 
-            return connectedEdges.Select(edge => edge.BaseVertex == vertex ? edge.TargetVertex : edge.BaseVertex).ToList();
+            return connectedEdges.Select(edge => edge.BaseVertex.Equals(vertex) ? edge.TargetVertex : edge.BaseVertex).ToList();
         }
 
 
@@ -182,7 +182,7 @@ namespace Tastenhacker.Pathfinding.Core
                             {
                                 edge.Marked = true;
 
-                                if (vertex == edge.BaseVertex)
+                                if (vertex.Equals(edge.BaseVertex))
                                 {
                                     ExtendedVertex<V> v = (ExtendedVertex<V>)edge.TargetVertex;
                                     v.InDegree--;
@@ -216,7 +216,7 @@ namespace Tastenhacker.Pathfinding.Core
                     throw new VertexNotFoundException();
                 }
 
-                edges.Add(edge.ID, edge);
+                Edges.Add(edge.ID, edge);
 
                 ExtendedVertex<V> baseVertex = (ExtendedVertex<V>)edge.BaseVertex;
                 ExtendedVertex<V> targetVertex = (ExtendedVertex<V>)edge.TargetVertex;
@@ -238,7 +238,7 @@ namespace Tastenhacker.Pathfinding.Core
         {
             if (EdgeExists(edge))
             {
-                edges.Remove(edge.ID);
+                Edges.Remove(edge.ID);
 
                 ExtendedVertex<V> baseVertex = (ExtendedVertex<V>)edge.BaseVertex;
                 ExtendedVertex<V> targetVertex = (ExtendedVertex<V>)edge.TargetVertex;
@@ -269,7 +269,7 @@ namespace Tastenhacker.Pathfinding.Core
                 RemoveEdge(edge);
             }
 
-            vertices.Remove(vertex.ID);
+            Vertices.Remove(vertex.ID);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of vertices in the graph</returns>
         public List<Vertex<V>> GetVertices()
         {
-            return vertices.Values.ToList();
+            return Vertices.Values.ToList();
         }
 
         /// <summary>
@@ -325,39 +325,39 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of edges in the graph</returns>
         public List<Edge<E,V>> GetEdges()
         {
-            return edges.Values.ToList();
+            return Edges.Values.ToList();
         }
 
         public List<Vertex<V>> BreadthFirstSearch(Vertex<V> root, int depth, FilterEdges<E, V> edgeFilter, FilterVertex<V> vertexFilter)
         {
-            List<Vertex<V>> ClosedList = new List<Vertex<V>>();
-            List<Vertex<V>> OpenList = new List<Vertex<V>>();
-            List<Vertex<V>> NewNodesPerIteration = new List<Vertex<V>>();
-            List<Vertex<V>> OpenListMarkedAsRemoved = new List<Vertex<V>>();
+            List<Vertex<V>> closedList = new List<Vertex<V>>();
+            List<Vertex<V>> openList = new List<Vertex<V>>();
+            List<Vertex<V>> newNodesPerIteration = new List<Vertex<V>>();
+            List<Vertex<V>> openListMarkedAsRemoved = new List<Vertex<V>>();
 
 
-            OpenList.Add(root);
+            openList.Add(root);
             for (int iteration = 0; iteration <= depth; iteration++)
             {
-                NewNodesPerIteration.Clear();
-                for (int index =  OpenList.Count - 1; index >= 0; index--)
+                newNodesPerIteration.Clear();
+                for (int index =  openList.Count - 1; index >= 0; index--)
                 {
-                    Vertex<V> v = OpenList[index];
-                    OpenListMarkedAsRemoved.Add(v);
-                    ClosedList.Add(v);
+                    Vertex<V> v = openList[index];
+                    openListMarkedAsRemoved.Add(v);
+                    closedList.Add(v);
                     foreach (Vertex<V> neighbour in GetNeighbourVertices(v, edgeFilter))
                     {
-                        if (!ClosedList.Contains(neighbour) && !OpenList.Contains(neighbour) && !vertexFilter(neighbour))
+                        if (!closedList.Contains(neighbour) && !openList.Contains(neighbour) && !vertexFilter(neighbour))
                         {
-                            NewNodesPerIteration.Add(neighbour);
+                            newNodesPerIteration.Add(neighbour);
                         }
                     }
                 }
-                OpenList.AddRange(NewNodesPerIteration);
-                OpenList.RemoveAll(OpenListMarkedAsRemoved.Contains);
-                OpenListMarkedAsRemoved.Clear();
+                openList.AddRange(newNodesPerIteration);
+                openList.RemoveAll(openListMarkedAsRemoved.Contains);
+                openListMarkedAsRemoved.Clear();
             }
-            return ClosedList.Distinct().ToList();
+            return closedList.Distinct().ToList();
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace Tastenhacker.Pathfinding.Core
         public List<Vertex<V>> BreadthFirstSearch(Vertex<V> root, Vertex<V> goal)
         {
             List<Vertex<V>> vertexList = new List<Vertex<V>>();
-            Dictionary<Vertex<V>, bool> mark = vertices.Values.ToDictionary(vertex => vertex, vertex => false);
+            Dictionary<Vertex<V>, bool> mark = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
             Queue<Vertex<V>> queue = new Queue<Vertex<V>>();
 
@@ -383,7 +383,7 @@ namespace Tastenhacker.Pathfinding.Core
             {
                 Vertex<V> vertex = queue.Dequeue();
 
-                if (vertex == goal)
+                if (vertex.Equals(goal))
                 {
                     return vertexList;
                 }
@@ -408,7 +408,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
         public List<Vertex<V>> DepthFirstSearch(Vertex<V> root, Vertex<V> goal)
         {
-            Dictionary<Vertex<V>, bool> mark = vertices.Values.ToDictionary(vertex => vertex, vertex => false);
+            Dictionary<Vertex<V>, bool> mark = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
             List<Vertex<V>> vertexList = new List<Vertex<V>> {root};
 
@@ -435,7 +435,7 @@ namespace Tastenhacker.Pathfinding.Core
         {
             VertexList.Add(root);
 
-            if (root == goal)
+            if (root.Equals(goal))
             {
                 return true;
             }
@@ -465,7 +465,7 @@ namespace Tastenhacker.Pathfinding.Core
         {
             List<Graph<E, V>> components = new List<Graph<E, V>>();
 
-            List<Vertex<V>> mark = vertices.Values.ToList();
+            List<Vertex<V>> mark = Vertices.Values.ToList();
 
             while (mark.Count != 0)
             {
@@ -489,7 +489,7 @@ namespace Tastenhacker.Pathfinding.Core
                     {
                         try
                         {
-                            graph.AddEdge(list[result.FindIndex(v => v == edge.BaseVertex)], list[result.FindIndex(delegate(Vertex<V> v) { return v == edge.TargetVertex; })]);
+                            graph.AddEdge(list[result.FindIndex(v => Equals(v, edge.BaseVertex))], list[result.FindIndex(v => Equals(v, edge.TargetVertex))]);
                         }
                         catch (DuplicateEdgeException)
                         {
@@ -516,7 +516,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>First vertex named fname, null if no vertex is named fname</returns>
         public Vertex<V> FindFirst(string vName)
         {
-            return vertices.Values.FirstOrDefault(vertex => vertex.Name == vName);
+            return Vertices.Values.FirstOrDefault(vertex => vertex.Name == vName);
         }
 
         /// <summary>
@@ -550,8 +550,8 @@ namespace Tastenhacker.Pathfinding.Core
                 }
 
                 if (myEdges.Where((t, j) => t.Weight != otherEdges[j].Weight
-                                            || myVertices.FindIndex(vertex => vertex == t.BaseVertex) != otherVertices.FindIndex(vertex => vertex == otherEdges[j].BaseVertex)
-                                            || myVertices.FindIndex(vertex => vertex == t.TargetVertex) != otherVertices.FindIndex(vertex => vertex == otherEdges[j].TargetVertex)).Any())
+                                            || myVertices.FindIndex(vertex => Equals(vertex, t.BaseVertex)) != otherVertices.FindIndex(vertex => Equals(vertex, otherEdges[j].BaseVertex))
+                                            || myVertices.FindIndex(vertex => Equals(vertex, t.TargetVertex)) != otherVertices.FindIndex(vertex => Equals(vertex, otherEdges[j].TargetVertex))).Any())
                 {
                     return false;
                 }
@@ -574,8 +574,8 @@ namespace Tastenhacker.Pathfinding.Core
         
         public void Clear()
         {
-            edges.Clear();
-            vertices.Clear();
+            Edges.Clear();
+            Vertices.Clear();
         }
     }
 }

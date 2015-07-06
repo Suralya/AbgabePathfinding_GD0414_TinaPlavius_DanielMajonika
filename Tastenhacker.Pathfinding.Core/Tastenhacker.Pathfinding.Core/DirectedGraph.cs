@@ -43,7 +43,7 @@ namespace Tastenhacker.Pathfinding.Core
             //both vertices have to exist
             if (VertexExists(from) && VertexExists(to))
             {
-                foreach (DirectedEdge<E, V> edge in edges.Values)
+                foreach (DirectedEdge<E, V> edge in Edges.Values)
                 {
                     if (edge.BaseVertex == from && edge.TargetVertex == to)
                     {
@@ -64,7 +64,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of incoming connected edge ids</returns>
         public List<UInt64> GetIncomingEdgeIds(Vertex<V> vertex)
         {
-            return (from pair in edges where pair.Value.TargetVertex == vertex select pair.Value.ID).ToList();
+            return (from pair in Edges where pair.Value.TargetVertex == vertex select pair.Value.ID).ToList();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of incoming edges</returns>
         public List<Edge<E, V>> GetIncomingEdges(Vertex<V> vertex)
         {
-            return (from pair in edges where pair.Value.TargetVertex == vertex select pair.Value).ToList();
+            return (from pair in Edges where pair.Value.TargetVertex == vertex select pair.Value).ToList();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>List of all outgoing edges</returns>
         public List<Edge<E, V>> GetOutgoingEdges(Vertex<V> vertex)
         {
-            return (from pair in edges where pair.Value.BaseVertex == vertex select pair.Value).ToList();
+            return (from pair in Edges where pair.Value.BaseVertex == vertex select pair.Value).ToList();
         }
 
         /// <summary>
