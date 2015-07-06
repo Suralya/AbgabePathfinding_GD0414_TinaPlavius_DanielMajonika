@@ -97,7 +97,7 @@ namespace Tastenhacker.Pathfinding.Core
                 foreach (Edge<E, V> edge in sourroundingEdges.Where(e => !edgeFilter(e)))
                 {
                     //find the other Vertex (NOT ME!)
-                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.vertex)) ? edge.TargetVertex : edge.BaseVertex;
+                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.Vertex)) ? edge.TargetVertex : edge.BaseVertex;
 
                     //check if this edge is cheap enough
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe) && !vertexFilter(notMe))
@@ -180,7 +180,7 @@ namespace Tastenhacker.Pathfinding.Core
                 foreach (Edge<E,V> edge in sourroundingEdges)
                 {
                     //find the other Vertex (NOT ME!)
-                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.vertex)) ? edge.TargetVertex : edge.BaseVertex;
+                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.Vertex)) ? edge.TargetVertex : edge.BaseVertex;
 
                     //check if this edge is cheap enough
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe))
