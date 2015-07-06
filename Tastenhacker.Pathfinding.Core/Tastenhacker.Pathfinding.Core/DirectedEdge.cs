@@ -41,16 +41,5 @@ namespace Tastenhacker.Pathfinding.Core
             BaseVertex = tVertex;
             TargetVertex = bVertex;
         }
-
-
-        /// <summary>
-        /// Creates the default string for this Edge.
-        /// </summary>
-        /// <returns>Default string for this Edge</returns>
-        public override string GetInitialString()
-        {
-            string mGraphvizString = baseVertex.GetInitialString() + "->" + targetVertex.GetInitialString();
-            return mGraphvizString;
-        }
     }
 }
