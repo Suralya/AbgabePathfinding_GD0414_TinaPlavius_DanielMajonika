@@ -97,7 +97,7 @@ namespace Tastenhacker.Pathfinding.Core
                 foreach (Edge<E, V> edge in sourroundingEdges.Where(e => !edgeFilter(e)))
                 {
                     //find the other vertex (NOT ME!)
-                    Vertex<V> notMe = (edge.BaseVertex == self.vertex) ? edge.TargetVertex : edge.BaseVertex;
+                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.vertex)) ? edge.TargetVertex : edge.BaseVertex;
 
                     //check if this edge is cheap enough
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe) && !vertexFilter(notMe))
@@ -180,7 +180,7 @@ namespace Tastenhacker.Pathfinding.Core
                 foreach (Edge<E,V> edge in sourroundingEdges)
                 {
                     //find the other vertex (NOT ME!)
-                    Vertex<V> notMe = (edge.BaseVertex == self.vertex) ? edge.TargetVertex : edge.BaseVertex;
+                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.vertex)) ? edge.TargetVertex : edge.BaseVertex;
 
                     //check if this edge is cheap enough
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe))
@@ -278,9 +278,9 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         public bool[][] Adjacency_UnDir()
         {
-            List<Vertex<V>> VertexList = GetVertices();
+            List<Vertex<V>> vertexList = GetVertices();
 
-            int cv = VertexList.Count;
+            int cv = vertexList.Count;
 
             bool[][] arr = new bool[cv][];
 
@@ -292,13 +292,13 @@ namespace Tastenhacker.Pathfinding.Core
                     arr[i][j] = false;
                 }
             }
-            foreach (Vertex<V> v in VertexList)
+            foreach (Vertex<V> v in vertexList)
             {
-                List<Vertex<V>> Neighbours = GetNeighbourVertices(v);
-                foreach (Vertex<V> nv in Neighbours)
+                List<Vertex<V>> neighbours = GetNeighbourVertices(v);
+                foreach (Vertex<V> nv in neighbours)
                 {
-                    int In = VertexList.IndexOf(v);
-                    int Inv = VertexList.IndexOf(nv);
+                    int In = vertexList.IndexOf(v);
+                    int Inv = vertexList.IndexOf(nv);
                     System.Diagnostics.Debug.WriteLine("Index of nv " + Inv + "\n" + "Index of n " + Inv);
                     if (In < Inv)
                     {
@@ -316,7 +316,7 @@ namespace Tastenhacker.Pathfinding.Core
         {
             List<Edge<E,V>> edges = GetConnectedEdges(v1);
 
-            return edges.Single(e => e.BaseVertex == neighbour || e.TargetVertex == neighbour);
+            return edges.Single(e => e.BaseVertex.Equals(neighbour) || e.TargetVertex.Equals(neighbour));
         }
     }
 }

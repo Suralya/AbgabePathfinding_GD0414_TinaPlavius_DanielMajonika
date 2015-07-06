@@ -38,7 +38,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>true if base vertices and target vertices are the same</returns>
         public override bool Equals(Edge<E, V> edge)
         {
-            return Weight.Equals(edge.Weight) && ((BaseVertex == edge.BaseVertex && TargetVertex == edge.TargetVertex) || (BaseVertex == edge.TargetVertex && TargetVertex == edge.BaseVertex));
+            return Weight.Equals(edge.Weight) && ((BaseVertex.Equals(edge.BaseVertex) && TargetVertex.Equals(edge.TargetVertex)) || (BaseVertex.Equals(edge.TargetVertex) && TargetVertex.Equals(edge.BaseVertex)));
         }
 
         /// <summary>
