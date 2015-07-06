@@ -43,6 +43,47 @@ namespace Graphtesting
             Assert.IsTrue(graph.EdgeExists(Edge4));
         }
 
+
+        [TestMethod]
+        public void FindingInGraph()
+        {
+            //Graph.FindEdge
+            Assert.AreEqual(Edge1, graph.FindEdge(Vertex1, Vertex2));
+            Assert.AreEqual(Edge2, graph.FindEdge(Vertex2, Vertex3));
+            Assert.AreEqual(Edge3, graph.FindEdge(Vertex3, Vertex4));
+            Assert.AreEqual(Edge4, graph.FindEdge(Vertex1, Vertex4));
+
+            List<Vertex<string>> expectedVertices = new List<Vertex<string>> { Vertex1, Vertex3 };
+            List<Vertex<string>> givenVertices = graph.GetNeighbourVertices(Vertex2);
+
+            foreach (Vertex<string> vertex in givenVertices)
+            {
+                expectedVertices.Remove(vertex);
+            }
+
+            //Graph.GetNeighbourVertices
+            Assert.AreEqual(0, expectedVertices.Count);
+
+            List<Edge<string, string>> expectedEdges1 = new List<Edge<string, string>> { Edge1, Edge4 };
+            List<Edge<string, string>> expectedEdges2 = new List<Edge<string, string>> { Edge2, Edge3 };
+            List<Edge<string, string>> givenEdges1 = graph.GetConnectedEdges(Vertex1);
+            List<Edge<string, string>> givenEdges2 = graph.GetConnectedEdges(Vertex3);
+
+            foreach (Edge<string, string> edge in givenEdges1)
+            {
+                expectedEdges1.Remove(edge);
+            }
+
+            foreach (Edge<string, string> edge in givenEdges2)
+            {
+                expectedEdges2.Remove(edge);
+            }
+
+            //Graph.GetConnectedEdges
+            Assert.AreEqual(0, expectedEdges1.Count);
+            Assert.AreEqual(0, expectedEdges2.Count);
+        }
+
         [TestMethod]
         public void IsCyclic()
         {
@@ -78,6 +119,8 @@ namespace Graphtesting
 
         }
 
+
+
         [TestMethod]
         public void Breadthfirstsearch()
         {
@@ -101,47 +144,7 @@ namespace Graphtesting
             graph.RemoveVertex(Vertex1);
             Assert.IsFalse(graph.VertexExists(Vertex1));
             graph.Clear();
-            Assert.AreEqual(graph,new UndirectedGraph<string, string>());
-        }
-
-        [TestMethod]
-        public void FindingInGraph()
-        {
-            //Graph.FindEdge
-            Assert.AreEqual(Edge1, graph.FindEdge(Vertex1, Vertex2));
-            Assert.AreEqual(Edge2, graph.FindEdge(Vertex2, Vertex3));
-            Assert.AreEqual(Edge3, graph.FindEdge(Vertex3, Vertex4));
-            Assert.AreEqual(Edge4, graph.FindEdge(Vertex1, Vertex4));
-
-            List<Vertex<string>> expectedVertices = new List<Vertex<string>> {Vertex1, Vertex3};
-            List<Vertex<string>> givenVertices = graph.GetNeighbourVertices(Vertex2);
-
-            foreach (Vertex<string> vertex in givenVertices)
-            {
-                expectedVertices.Remove(vertex);
-            }
-
-            //Graph.GetNeighbourVertices
-            Assert.AreEqual(0, expectedVertices.Count);
-
-            List<Edge<string, string>> expectedEdges1 = new List<Edge<string, string>> { Edge1, Edge4 };
-            List<Edge<string, string>> expectedEdges2 = new List<Edge<string, string>> { Edge2, Edge3 };
-            List<Edge<string, string>> givenEdges1 = graph.GetConnectedEdges(Vertex1);
-            List<Edge<string, string>> givenEdges2 = graph.GetConnectedEdges(Vertex3);
-
-            foreach (Edge<string, string> edge in givenEdges1)
-            {
-                expectedEdges1.Remove(edge);
-            }
-
-            foreach (Edge<string, string> edge in givenEdges2)
-            {
-                expectedEdges2.Remove(edge);
-            }
-
-            //Graph.GetConnectedEdges
-            Assert.AreEqual(0, expectedEdges1.Count);
-            Assert.AreEqual(0, expectedEdges2.Count);
+            Assert.AreEqual(graph, new UndirectedGraph<string, string>());
         }
     }
 }
