@@ -410,13 +410,13 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
         public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal,out List<Vertex<V>>foundvertices)
         {
-            Dictionary<Vertex<V>, bool> mark = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
+            Dictionary<Vertex<V>, bool> marked = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
             List<Vertex<V>> vertexList = new List<Vertex<V>> {root};
 
             List<Vertex<V>> neighbours = GetNeighbourVertices(root);
 
-            foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref mark, ref vertexList)))
+            foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref marked, ref vertexList)))
             {
 
             }
