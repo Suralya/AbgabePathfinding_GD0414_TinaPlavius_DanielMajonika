@@ -408,7 +408,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
-        public List<Vertex<V>> DepthFirstSearch(Vertex<V> root, Vertex<V> goal)
+        public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal,out List<Vertex<V>>foundvertices)
         {
             Dictionary<Vertex<V>, bool> mark = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
@@ -418,9 +418,10 @@ namespace Tastenhacker.Pathfinding.Core
 
             foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref mark, ref vertexList)))
             {
-            }
 
-            return vertexList;
+            }
+            foundvertices = vertexList;
+            return true;
         }
 
 

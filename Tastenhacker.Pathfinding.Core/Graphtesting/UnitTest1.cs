@@ -83,8 +83,15 @@ namespace Graphtesting
         {
             List<Vertex<string> > bread = new List<Vertex<string>>();
             Assert.IsTrue(graph.BreadthFirstSearch(Vertex1, Vertex3,out bread));
-
         }
+
+        [TestMethod]
+        public void Depthfirstsearch()
+        {
+            List<Vertex<string>> bread = new List<Vertex<string>>();
+            Assert.IsTrue(graph.DepthFirstSearch(Vertex1, Vertex3, out bread));
+        }
+
 
         [TestMethod]
         public void RemovingAndClearing()
