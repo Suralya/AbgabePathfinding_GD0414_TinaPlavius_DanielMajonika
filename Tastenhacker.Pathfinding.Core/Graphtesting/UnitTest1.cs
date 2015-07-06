@@ -78,9 +78,14 @@ namespace Graphtesting
         }
 
         [TestMethod]
-        public void IsAdjasdadascency()
+        public void RemovingAndClearing()
         {
-            bool[][] helperBools = graph.Adjacency_UnDir();
+            graph.RemoveEdge(Edge1);
+            Assert.IsFalse(graph.EdgeExists(Edge1));
+            graph.RemoveVertex(Vertex1);
+            Assert.IsFalse(graph.VertexExists(Vertex1));
+            //graph.Clear();
+            Assert.AreEqual(graph,new UndirectedGraph<string, string>());
         }
     }
 }
