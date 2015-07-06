@@ -158,11 +158,5 @@ namespace Tastenhacker.Pathfinding.Core
         {
             return Name;
         } 
-
-
-        public virtual string GetInitialString()
-        {
-            return "";
-        }
     }
 }

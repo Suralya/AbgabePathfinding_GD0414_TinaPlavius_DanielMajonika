@@ -51,9 +51,9 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Create new vertex and add it to the graph
+        /// Create new Vertex and add it to the graph
         /// </summary>
-        /// <returns>Newly created vertex</returns>
+        /// <returns>Newly created Vertex</returns>
         public Vertex<V> CreateVertex(V data, string fName = null)
         {
             Vertex<V> v = new ExtendedVertex<V>(data, fName);
@@ -114,7 +114,7 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Returns a List of all neighbour vertices of this vertex
+        /// Returns a List of all neighbour vertices of this Vertex
         /// </summary>
         /// <param name="vertex">Vertex to search neighbours for</param>
         /// <returns></returns>
@@ -133,15 +133,15 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Returns if this Edge exits (Edge is described by two vertices)
         /// </summary>
-        /// <param name="a">first vertex of the edge to test</param>
-        /// <param name="b">second vertex of the edge to test</param>
+        /// <param name="a">first Vertex of the edge to test</param>
+        /// <param name="b">second Vertex of the edge to test</param>
         public abstract bool EdgeExists(Vertex<V> a, Vertex<V> b);
 
         /// <summary>
         /// Add new edge to graph
         /// </summary>
-        /// <param name="v1">First vertex</param>
-        /// <param name="v2">Second vertex</param>
+        /// <param name="v1">First Vertex</param>
+        /// <param name="v2">Second Vertex</param>
         /// <param name="weight">Edge weight</param>
         /// <param name="name">Edge fname</param>
         /// <returns>Added edge</returns>
@@ -252,7 +252,7 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Remove vertex and all edges attached to it from graph
+        /// Remove Vertex and all edges attached to it from graph
         /// </summary>
         /// <param name="vertex">Vertex to remove</param>
         public void RemoveVertex(Vertex<V> vertex)
@@ -361,7 +361,7 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Search for vertex in graph breadth first
+        /// Search for Vertex in graph breadth first
         /// </summary>
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
@@ -401,7 +401,7 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Search for vertex in graph depth first
+        /// Search for Vertex in graph depth first
         /// </summary>
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
@@ -423,7 +423,7 @@ namespace Tastenhacker.Pathfinding.Core
 
 
         /// <summary>
-        /// Search for vertex in graph depth first
+        /// Search for Vertex in graph depth first
         /// </summary>
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
@@ -510,10 +510,10 @@ namespace Tastenhacker.Pathfinding.Core
         protected abstract Graph<E, V> NewGraph();
 
         /// <summary>
-        /// Find first vertex named fname in graph
+        /// Find first Vertex named fname in graph
         /// </summary>
-        /// <param name="vName">Name of vertex to find</param>
-        /// <returns>First vertex named fname, null if no vertex is named fname</returns>
+        /// <param name="vName">Name of Vertex to find</param>
+        /// <returns>First Vertex named fname, null if no Vertex is named fname</returns>
         public Vertex<V> FindFirst(string vName)
         {
             return Vertices.Values.FirstOrDefault(vertex => vertex.Name == vName);

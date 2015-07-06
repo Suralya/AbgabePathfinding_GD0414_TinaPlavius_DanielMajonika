@@ -16,8 +16,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Create new directed edge
         /// </summary>
-        /// <param name="baseVertex">Base vertex</param>
-        /// <param name="targetVertex">Target vertex</param>
+        /// <param name="baseVertex">Base Vertex</param>
+        /// <param name="targetVertex">Target Vertex</param>
         /// <param name="weight">Edge weight</param>
         /// <param name="name">Edge name</param>
         public DirectedEdge(Vertex<V> baseVertex, Vertex<V> targetVertex, int weight = 0, string name = null) : base(baseVertex, targetVertex, weight, name)

@@ -16,7 +16,7 @@ namespace Tastenhacker.Pathfinding.Core
     public class AStarVertex<V>
     { 
         public int G, H;
-        public Vertex<V> vertex;
+        public Vertex<V> Vertex;
         public AStarVertex<V> Origin;
         public int F
         {
@@ -25,7 +25,7 @@ namespace Tastenhacker.Pathfinding.Core
 
         public static AStarVertex<V> Create(Vertex<V> v)
         {
-            AStarVertex<V> vertex = new AStarVertex<V> {vertex = v, Origin = null, G = 0, H = 0};
+            AStarVertex<V> vertex = new AStarVertex<V> {Vertex = v, Origin = null, G = 0, H = 0};
 
             return vertex;
         }
@@ -35,7 +35,7 @@ namespace Tastenhacker.Pathfinding.Core
     {
         public bool ContainsVertex(Vertex<V> v)
         {
-            return this.Any(vertex => Equals(vertex.vertex, v));
+            return this.Any(vertex => Equals(vertex.Vertex, v));
         }
 
         public AStarVertex<V> FindCheapest()
@@ -52,7 +52,7 @@ namespace Tastenhacker.Pathfinding.Core
 
         public AStarVertex<V> FindElement(Vertex<V> vertex)
         {
-            return this.FirstOrDefault(entry => Equals(entry.vertex, vertex));
+            return this.FirstOrDefault(entry => Equals(entry.Vertex, vertex));
         }
     }
 }

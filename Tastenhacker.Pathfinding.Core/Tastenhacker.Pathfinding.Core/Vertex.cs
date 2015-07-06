@@ -64,12 +64,12 @@ namespace Tastenhacker.Pathfinding.Core
 		}
 
 		/// <summary>
-		/// ID of vertex
+		/// ID of Vertex
 		/// </summary>
 		public ulong ID { get; private set; }
 
 		/// <summary>
-		/// Returns the name given to the vertex
+		/// Returns the name given to the Vertex
 		/// </summary>
 		public string Name { get; private set; }
 
@@ -85,10 +85,10 @@ namespace Tastenhacker.Pathfinding.Core
 		}
 
 		/// <summary>
-		/// Create new extended vertex (to be used internally)
+		/// Create new extended Vertex (to be used internally)
 		/// </summary>
 		/// <param name="data"></param>
-		/// <param name="name">Name associated with the vertex (generated automatically if null)</param>
+		/// <param name="name">Name associated with the Vertex (generated automatically if null)</param>
 		public Vertex(T data, string name = null)
 		{
 			DegreeIn = 0;
@@ -99,7 +99,7 @@ namespace Tastenhacker.Pathfinding.Core
 
 			if (name == null)
 			{
-				Name = "vertex-" + ID;
+				Name = "Vertex-" + ID;
 			}
 			else
 			{

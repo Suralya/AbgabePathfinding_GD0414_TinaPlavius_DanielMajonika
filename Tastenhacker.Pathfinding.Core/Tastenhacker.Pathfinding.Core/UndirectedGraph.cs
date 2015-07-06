@@ -33,8 +33,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Returns if this Edge exits (Edge is described by two vertices), complexity: O (|E|)
         /// </summary>
-        /// <param name="a">first vertex of the edge to test</param>
-        /// <param name="b">second vertex of the edge to test</param>
+        /// <param name="a">first Vertex of the edge to test</param>
+        /// <param name="b">second Vertex of the edge to test</param>
         public override bool EdgeExists(Vertex<V> a, Vertex<V> b)
         {
             return EdgeExists(new UndirectedEdge<E, V>(a, b));
@@ -43,8 +43,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Add new edge to undirected graph
         /// </summary>
-        /// <param name="v1">First vertex</param>
-        /// <param name="v2">Second vertex</param>
+        /// <param name="v1">First Vertex</param>
+        /// <param name="v2">Second Vertex</param>
         /// <param name="weight">Edge weight</param>
         /// <param name="name">Edge name</param>
         /// <returns>ID of added edge</returns>
@@ -61,10 +61,10 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Creates the shortest path from start-vertex to finish vertex, uses a heuristic to be faster than the Dijkstra 
+        /// Creates the shortest path from start-Vertex to finish Vertex, uses a heuristic to be faster than the Dijkstra 
         /// </summary>
-        /// <param name="start">Represents the start-vertex</param>
-        /// <param name="finish">Represents the finish-vertex</param>
+        /// <param name="start">Represents the start-Vertex</param>
+        /// <param name="finish">Represents the finish-Vertex</param>
         /// <param name="maxWeight">Represents the max-edge-weight that can be passed by the algorithm</param>
         /// <param name="heuristicDelegate">Represents a heuristic to helpt the AStar to be faster</param>
         /// <returns>Returns the shortest path if available, returns NULL if no path exists</returns>
@@ -76,7 +76,7 @@ namespace Tastenhacker.Pathfinding.Core
             //add start point to openList
             openList.Add(AStarVertex<V>.Create(start));
 
-            //runs till open list is empty (we found finish-vertex)
+            //runs till open list is empty (we found finish-Vertex)
             while (!closedList.ContainsVertex(finish) || openList.Count != 0)
             {
                 if (openList.Count == 0)
@@ -92,21 +92,21 @@ namespace Tastenhacker.Pathfinding.Core
                 closedList.Add(self);
 
                 //3. find sourrounding vertices
-                List<Edge<E, V>> sourroundingEdges = GetConnectedEdges(self.vertex);
+                List<Edge<E, V>> sourroundingEdges = GetConnectedEdges(self.Vertex);
 
                 foreach (Edge<E, V> edge in sourroundingEdges.Where(e => !edgeFilter(e)))
                 {
-                    //find the other vertex (NOT ME!)
+                    //find the other Vertex (NOT ME!)
                     Vertex<V> notMe = (edge.BaseVertex.Equals(self.vertex)) ? edge.TargetVertex : edge.BaseVertex;
 
                     //check if this edge is cheap enough
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe) && !vertexFilter(notMe))
                     {
                         AStarVertex<V> neigbour = AStarVertex<V>.Create(notMe);
-                        neigbour.Origin = self; //self.vertex
+                        neigbour.Origin = self; //self.Vertex
                         neigbour.G = self.G + edge.Weight;
-                        neigbour.H = heuristicDelegate(self.vertex, finish, this);
-                        neigbour.vertex.PathCost = edge.Weight;
+                        neigbour.H = heuristicDelegate(self.Vertex, finish, this);
+                        neigbour.Vertex.PathCost = edge.Weight;
                         openList.Add(neigbour);
                     }
                     else
@@ -119,8 +119,8 @@ namespace Tastenhacker.Pathfinding.Core
                             {
                                 if (a.F > self.F + edge.Weight) // a.G > self.G + edge.Weight
                                 {
-                                    a.vertex.PathCost = edge.Weight;
-                                    a.Origin = self; //self.vertex
+                                    a.Vertex.PathCost = edge.Weight;
+                                    a.Origin = self; //self.Vertex
                                 }
                             }
                         }
@@ -135,7 +135,7 @@ namespace Tastenhacker.Pathfinding.Core
             while (pathFinish != null)
             {
                 //add to path
-                path.Add(pathFinish.vertex);
+                path.Add(pathFinish.Vertex);
                 pathFinish = pathFinish.Origin;
             }
 
@@ -145,10 +145,10 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Calculates the shortest path from start-vertex to finish vertex
+        /// Calculates the shortest path from start-Vertex to finish Vertex
         /// </summary>
-        /// <param name="start">Represents the start-vertex</param>
-        /// <param name="finish">Represents the finish-vertex</param>
+        /// <param name="start">Represents the start-Vertex</param>
+        /// <param name="finish">Represents the finish-Vertex</param>
         /// <param name="maxWeight">Represents the max-edge-weight that can be passed by the algorithm</param>
         /// <returns>Returns the shortest path if available, returns NULL if no path exists</returns>
         public Path<Vertex<V>> Djkstra(Vertex<V> start, Vertex<V> finish, int maxWeight)
@@ -159,7 +159,7 @@ namespace Tastenhacker.Pathfinding.Core
             //add start point to openList
             openList.Add(AStarVertex<V>.Create(start));
 
-            //runs till open list is empty (we found finish-vertex)
+            //runs till open list is empty (we found finish-Vertex)
             while(!closedList.ContainsVertex(finish) || openList.Count != 0)
             {
                 if(openList.Count == 0)
@@ -175,18 +175,18 @@ namespace Tastenhacker.Pathfinding.Core
                 closedList.Add(self);
 
                 //3. find sourrounding vertices
-                List<Edge<E,V>> sourroundingEdges = GetConnectedEdges(self.vertex);
+                List<Edge<E,V>> sourroundingEdges = GetConnectedEdges(self.Vertex);
 
                 foreach (Edge<E,V> edge in sourroundingEdges)
                 {
-                    //find the other vertex (NOT ME!)
+                    //find the other Vertex (NOT ME!)
                     Vertex<V> notMe = (edge.BaseVertex.Equals(self.vertex)) ? edge.TargetVertex : edge.BaseVertex;
 
                     //check if this edge is cheap enough
                     if (edge.Weight <= maxWeight && !openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe))
                     {
                         AStarVertex<V> neigbour = AStarVertex<V>.Create(notMe);
-                        neigbour.Origin = self; //self.vertex
+                        neigbour.Origin = self; //self.Vertex
                         neigbour.G = self.G + edge.Weight;
                         neigbour.H = 0;
 
@@ -202,7 +202,7 @@ namespace Tastenhacker.Pathfinding.Core
                             {
                                 if (a.F > self.F + edge.Weight)
                                 {
-                                    a.Origin = self; //self.vertex
+                                    a.Origin = self; //self.Vertex
                                 }
                             }
                         }
@@ -217,7 +217,7 @@ namespace Tastenhacker.Pathfinding.Core
             while(pathFinish != null)
             {
                 //add to path
-                path.Add(pathFinish.vertex);
+                path.Add(pathFinish.Vertex);
                 pathFinish = pathFinish.Origin;
             }
 
