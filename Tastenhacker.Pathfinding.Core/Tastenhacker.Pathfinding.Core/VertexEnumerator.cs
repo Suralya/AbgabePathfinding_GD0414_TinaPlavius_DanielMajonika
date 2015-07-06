@@ -37,7 +37,8 @@ namespace Tastenhacker.Pathfinding.Core
 
         public bool MoveNext()
         {
-            return (++_position < _vertices.Count);
+            _position++;
+            return (_position < _vertices.Count);
         }
 
         public void Reset()
@@ -45,8 +46,5 @@ namespace Tastenhacker.Pathfinding.Core
             _position = -1;
         }
 
-        public void Dispose()
-        {
-        }
     }
 }
