@@ -170,7 +170,7 @@ namespace Tastenhacker.Pathfinding.Core
                 {
                     if (vertex.Marked == false)
                     {
-                        if (vertex.InDegree == 0 || vertex.OutDegree == 0)
+                        if (vertex.InDegree <= 1 || vertex.OutDegree <= 1)
                         {
                             lookAtVertices = true;
                             markedVertexCount++;
