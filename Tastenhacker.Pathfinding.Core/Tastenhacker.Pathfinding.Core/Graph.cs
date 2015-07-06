@@ -108,7 +108,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         /// <param name="vertex">Vertex to find connected edges for</param>
         /// <returns>List of connected edges</returns>
-        public List<Edge<E,V>> GetConnectedEdges(Vertex<V> vertex)
+        public List<Edge<E, V>> GetConnectedEdges(Vertex<V> vertex)
         {
             return (from pair in Edges where pair.Value.BaseVertex.Equals(vertex) || pair.Value.TargetVertex.Equals(vertex) select pair.Value).ToList();
         }
