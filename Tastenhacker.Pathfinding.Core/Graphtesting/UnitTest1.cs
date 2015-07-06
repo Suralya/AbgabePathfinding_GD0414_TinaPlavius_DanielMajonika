@@ -79,6 +79,14 @@ namespace Graphtesting
         }
 
         [TestMethod]
+        public void Breadthfirstsearch()
+        {
+            List<Vertex<string> > bread = new List<Vertex<string>>();
+            Assert.IsTrue(graph.BreadthFirstSearch(Vertex1, Vertex3,out bread));
+
+        }
+
+        [TestMethod]
         public void RemovingAndClearing()
         {
             graph.RemoveEdge(Edge1);

@@ -366,7 +366,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
         /// <returns>Orderd list of vertices examined while searching for goal breadth first</returns>
-        public List<Vertex<V>> BreadthFirstSearch(Vertex<V> root, Vertex<V> goal)
+        public bool BreadthFirstSearch(Vertex<V> root, Vertex<V> goal, out List<Vertex<V>>foundvertices)
         {
             List<Vertex<V>> vertexList = new List<Vertex<V>>();
             Dictionary<Vertex<V>, bool> mark = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
@@ -385,7 +385,8 @@ namespace Tastenhacker.Pathfinding.Core
 
                 if (vertex.Equals(goal))
                 {
-                    return vertexList;
+                    foundvertices = vertexList;
+                    return true;
                 }
 
                 List<Edge<E, V>> connectedEdges = GetConnectedEdges(vertex);
@@ -397,7 +398,8 @@ namespace Tastenhacker.Pathfinding.Core
                     vertexList.Add(target);
                 }
             }
-            return vertexList;
+            foundvertices = vertexList;
+            return false;
         }
 
         /// <summary>
@@ -469,7 +471,8 @@ namespace Tastenhacker.Pathfinding.Core
 
             while (mark.Count != 0)
             {
-                List<Vertex<V>> result = BreadthFirstSearch(mark[0], null);
+                List<Vertex<V>> result = new List<Vertex<V>>();
+                BreadthFirstSearch(mark[0], null, out result);
 
                 Graph<E, V> graph = NewGraph();
                 List<Vertex<V>> list = new List<Vertex<V>>();
