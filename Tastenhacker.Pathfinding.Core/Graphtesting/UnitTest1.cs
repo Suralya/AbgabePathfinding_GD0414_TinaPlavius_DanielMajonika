@@ -47,5 +47,11 @@ namespace Graphtesting
         {
             Assert.IsTrue(graph.IsAcyclic());
         }
+
+        [TestMethod]
+        public void IsAdjacency()
+        {
+            bool[][] helperBools = graph.Adjacency_UnDir();
+        }
     }
 }
