@@ -15,7 +15,7 @@ namespace Tastenhacker.Pathfinding.Core
     /// <typeparam _name="V">Type for user data associated with vertices</typeparam>
     public abstract class Edge<E, V> : IComparable
     {
-        private readonly UInt64 id;
+        private readonly UInt64 _id;
         private static UInt64 idGenerator = 0;
         private string _name;
 
@@ -59,7 +59,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         public UInt64 ID
         {
-            get { return id; }
+            get { return _id; }
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Tastenhacker.Pathfinding.Core
             BaseVertex = baseVertex;
             TargetVertex = targetVertex;
             Weight = weight;
-            id = ++idGenerator;
+            _id = ++idGenerator;
             Marked = false;
 
             this._name = name ?? "edge-" + ID;
