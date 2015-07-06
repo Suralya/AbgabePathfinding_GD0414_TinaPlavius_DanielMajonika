@@ -127,7 +127,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <returns>true if base vertices and target vertices are the same</returns>
         public virtual bool Equals(Edge<E, V> edge)
         {
-            return  Weight.Equals(edge.Weight) && BaseVertex == edge.BaseVertex && TargetVertex == edge.TargetVertex;
+            return  Weight.Equals(edge.Weight) && Equals(BaseVertex, edge.BaseVertex) &&Equals(TargetVertex, edge.TargetVertex);
         }
 
         public override int GetHashCode()

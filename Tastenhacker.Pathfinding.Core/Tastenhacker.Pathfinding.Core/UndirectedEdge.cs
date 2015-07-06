@@ -40,14 +40,5 @@ namespace Tastenhacker.Pathfinding.Core
         {
             return Weight.Equals(edge.Weight) && ((BaseVertex.Equals(edge.BaseVertex) && TargetVertex.Equals(edge.TargetVertex)) || (BaseVertex.Equals(edge.TargetVertex) && TargetVertex.Equals(edge.BaseVertex)));
         }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>Default string for this Edge</returns>
-        public override string GetInitialString()
-        {
-            string mGraphvizString = baseVertex.GetInitialString() + "--" + targetVertex.GetInitialString();
-            return mGraphvizString;
-        }
     }
 }
