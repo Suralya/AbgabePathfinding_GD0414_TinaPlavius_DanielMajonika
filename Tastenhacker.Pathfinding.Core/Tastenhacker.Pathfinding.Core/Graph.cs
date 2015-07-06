@@ -366,7 +366,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
         /// <returns>Orderd list of vertices examined while searching for goal breadth first</returns>
-        public bool BreadthFirstSearch(Vertex<V> root, Vertex<V> goal, out List<Vertex<V>>foundvertices)
+        public bool BreadthFirstSearch(Vertex<V> root, Vertex<V> goal, out List<Vertex<V>>inspectedvertices)
         {
             List<Vertex<V>> vertexList = new List<Vertex<V>>();
             Dictionary<Vertex<V>, bool> mark = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
@@ -385,7 +385,7 @@ namespace Tastenhacker.Pathfinding.Core
 
                 if (vertex.Equals(goal))
                 {
-                    foundvertices = vertexList;
+                    inspectedvertices = vertexList;
                     return true;
                 }
 
@@ -398,7 +398,7 @@ namespace Tastenhacker.Pathfinding.Core
                     vertexList.Add(target);
                 }
             }
-            foundvertices = vertexList;
+            inspectedvertices = vertexList;
             return false;
         }
 
@@ -408,7 +408,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
-        public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal,out List<Vertex<V>>foundvertices)
+        public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal,out List<Vertex<V>>inspectedvertices)
         {
             Dictionary<Vertex<V>, bool> marked = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
@@ -416,12 +416,28 @@ namespace Tastenhacker.Pathfinding.Core
 
             List<Vertex<V>> neighbours = GetNeighbourVertices(root);
 
+            marked[root] = true;
+            vertexList.Add(root);
+
             foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref marked, ref vertexList)))
             {
+                marked[vertex] = true;
+                vertexList.Add(vertex);
+                if (vertex.Equals(goal))
+                {
+                    inspectedvertices = vertexList;
+                    return true;
+                }
+
+                List<Vertex<V>> temp = GetNeighbourVertices(vertex);
+                if (temp != null)
+                {
+                    DepthFirstSearch(vertex, goal,out vertexList);
+                }
 
             }
-            foundvertices = vertexList;
-            return true;
+            inspectedvertices = vertexList;
+            return false;
         }
 
 
