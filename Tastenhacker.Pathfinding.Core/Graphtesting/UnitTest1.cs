@@ -51,6 +51,35 @@ namespace Graphtesting
         [TestMethod]
         public void IsAdjacency()
         {
+            bool[][] expectedBools = new bool[4][];
+            bool[][] givenBools = graph.Adjacency_UnDir();
+
+            expectedBools[0] = new bool[1]; expectedBools[1] = new bool[2]; expectedBools[2] = new bool[3]; expectedBools[3] = new bool[4];
+
+            expectedBools[0][0] = false;
+            expectedBools[1][0] = true;     expectedBools[1][1] = false;
+            expectedBools[2][0] = false;    expectedBools[2][1] = true;     expectedBools[2][2] = false;
+            expectedBools[3][0] = true;     expectedBools[3][1] = false;    expectedBools[3][2] = true;     expectedBools[3][3] = false;
+
+            for (int i = 0; i < expectedBools.Length - 1; i++)
+            {
+                for (int j = 0; j < expectedBools[i].Length - 1; j++)
+                {
+                    Assert.AreEqual(expectedBools[i][j], givenBools[i][j]);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void AStarTest()
+        {
+            //TODO Testing AStar
+
+        }
+
+        [TestMethod]
+        public void IsAdjasdadascency()
+        {
             bool[][] helperBools = graph.Adjacency_UnDir();
         }
     }
