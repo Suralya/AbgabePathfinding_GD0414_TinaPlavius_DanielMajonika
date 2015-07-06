@@ -5,6 +5,7 @@
 //----------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tastenhacker.Pathfinding.Core
 {
@@ -21,8 +22,8 @@ namespace Tastenhacker.Pathfinding.Core
 
         public PriorityQueue(IComparer<T> comparer, IKeyDecreaser<T> decreaser)
         {
-            this._comparer = comparer;
-            this._decreaser = decreaser;
+            _comparer = comparer;
+            _decreaser = decreaser;
         }
 
         public void Insert(T item)
@@ -52,12 +53,9 @@ namespace Tastenhacker.Pathfinding.Core
 
         public void Merge(IList<T> source)
         {
-            foreach (T item in source)
+            foreach (T item in source.Where(item => !_items.Contains(item)))
             {
-                if (!_items.Contains(item))
-                {
-                    Insert(item);
-                }
+                Insert(item);
             }
             _items.Sort(_comparer);
         }

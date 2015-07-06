@@ -16,8 +16,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Create new undirected edge
         /// </summary>
-        /// <param name="firstVertex">First vertex</param>
-        /// <param name="secondVertex">Second vertex</param>
+        /// <param name="firstVertex">First Vertex</param>
+        /// <param name="secondVertex">Second Vertex</param>
         /// <param name="weight">Edge weight</param>
         /// <param name="name">Edge name</param>
         public UndirectedEdge(Vertex<V> firstVertex, Vertex<V> secondVertex, int weight = 0, string name = null) : base(firstVertex, secondVertex, weight, name)

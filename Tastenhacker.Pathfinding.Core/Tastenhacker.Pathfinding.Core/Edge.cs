@@ -32,7 +32,7 @@ namespace Tastenhacker.Pathfinding.Core
         protected Vertex<V> baseVertex, targetVertex;
 
         /// <summary>
-        /// First vertex
+        /// First Vertex
         /// </summary>
         public Vertex<V> BaseVertex
         {
@@ -41,7 +41,7 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Second vertex
+        /// Second Vertex
         /// </summary>
         public Vertex<V> TargetVertex
         {
@@ -73,8 +73,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Create new edge
         /// </summary>
-        /// <param _name="baseVertex">First vertex</param>
-        /// <param _name="targetVertex">Second vertex</param>
+        /// <param _name="baseVertex">First Vertex</param>
+        /// <param _name="targetVertex">Second Vertex</param>
         /// <param _name="weight">Edge weight</param>
         /// <param _name="name">Edge _name</param>
         protected Edge(Vertex<V> baseVertex, Vertex<V> targetVertex, int weight = 0, string name = null)

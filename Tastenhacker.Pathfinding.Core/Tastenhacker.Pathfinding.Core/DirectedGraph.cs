@@ -23,8 +23,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Returns if this Edge exits (Edge is described by two vertices), complexity: O (|E|)
         /// </summary>
-        /// <param name="from">first vertex of the edge to test</param>
-        /// <param name="to">second vertex of the edge to test</param>
+        /// <param name="from">first Vertex of the edge to test</param>
+        /// <param name="to">second Vertex of the edge to test</param>
         public override bool EdgeExists(Vertex<V> from, Vertex<V> to)
         {
             DirectedEdge<E, V> edge;
@@ -35,8 +35,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Returns if this Edge exits (Edge is described by two vertices), complexity: O (|E|)
         /// </summary>
-        /// <param name="from">first vertex of the edge to test</param>
-        /// <param name="to">second vertex of the edge to test</param>
+        /// <param name="from">first Vertex of the edge to test</param>
+        /// <param name="to">second Vertex of the edge to test</param>
         /// <param name="foundEdge">Edge (if an edge build by these vertices exits)</param>
         public bool EdgeExists(Vertex<V> from, Vertex<V> to, out DirectedEdge<E, V> foundEdge)
         {
@@ -58,7 +58,7 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Returns a list of all incoming edges that are connected to this vertex
+        /// Returns a list of all incoming edges that are connected to this Vertex
         /// </summary>
         /// <param name="vertex">Vertex to find incoming edge ids for</param>
         /// <returns>List of incoming connected edge ids</returns>
@@ -90,8 +90,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Add new edge to directed graph
         /// </summary>
-        /// <param name="v1">Base vertex</param>
-        /// <param name="v2">Target vertex</param>
+        /// <param name="v1">Base Vertex</param>
+        /// <param name="v2">Target Vertex</param>
         /// <param name="weight">Edge weight</param>
         /// <param name="name">Edge name</param>
         /// <returns>Added edge</returns>

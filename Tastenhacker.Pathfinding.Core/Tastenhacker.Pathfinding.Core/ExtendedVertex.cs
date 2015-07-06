@@ -40,10 +40,10 @@ namespace Tastenhacker.Pathfinding.Core
         }
 
         /// <summary>
-        /// Create new extended vertex (to be used internally)
+        /// Create new extended Vertex (to be used internally)
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="name">Name associated with the vertex (generated automatically if null)</param>
+        /// <param name="name">Name associated with the Vertex (generated automatically if null)</param>
         public ExtendedVertex(T data, string name = null) : base(data, name)
         {
         }
