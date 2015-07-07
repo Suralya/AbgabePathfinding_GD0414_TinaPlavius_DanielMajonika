@@ -138,8 +138,6 @@ namespace Tastenhacker.Pathfinding.Core
                 path.Add(pathFinish.Vertex);
                 pathFinish = pathFinish.Origin;
             }
-
-            //TODO path!
             path.Reverse();
             return path;
         }
@@ -229,8 +227,6 @@ namespace Tastenhacker.Pathfinding.Core
                 path.Add(pathFinish.Vertex);
                 pathFinish = pathFinish.Origin;
             }
-
-            //TODO path!
             path.Reverse();
             return path;
         } 
