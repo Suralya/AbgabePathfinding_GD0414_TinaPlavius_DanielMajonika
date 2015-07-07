@@ -102,6 +102,16 @@ namespace Graphtesting
         }
 
         [TestMethod]
+        public void FindingInGraph()
+        {
+            Initialize();
+            DirectedEdge<string, string> expectededge;
+            Assert.IsTrue(_graph.EdgeExists(_vertex1, _vertex2, out expectededge));
+            Assert.AreEqual(_vertex1, expectededge.BaseVertex);
+            Assert.AreEqual(_vertex2, expectededge.TargetVertex);
+        }
+
+        [TestMethod]
         public void VertexCreation()
         {
             Initialize();
@@ -170,7 +180,6 @@ namespace Graphtesting
 
             Assert.IsFalse(tmp2);
         }
-
 
         [TestMethod]
         public void RemovingAndClearing()
