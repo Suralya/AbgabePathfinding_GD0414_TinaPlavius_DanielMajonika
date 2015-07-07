@@ -11,7 +11,7 @@ namespace Tastenhacker.Pathfinding.Core
 {
     public interface IKeyDecreaser<in T>
     {
-        void decreaseKey(T item, int amount = -1);
+        void DecreaseKey(T item, int amount = -1);
     }
 
     public class PriorityQueue<T> : IList<T>
@@ -48,7 +48,7 @@ namespace Tastenhacker.Pathfinding.Core
 
         public void DecreaseKey(T item, int amount = -1)
         {
-            _decreaser.decreaseKey(item, amount);
+            _decreaser.DecreaseKey(item, amount);
         }
 
         public void Merge(IList<T> source)
