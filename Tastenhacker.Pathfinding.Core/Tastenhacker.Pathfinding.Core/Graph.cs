@@ -432,7 +432,8 @@ namespace Tastenhacker.Pathfinding.Core
                 List<Vertex<V>> temp = GetNeighbourVertices(vertex);
                 if (temp != null)
                 {
-                    DepthFirstSearch(vertex, goal,out vertexList);
+                    //<todo>recursion handling</todo>
+                    //DepthFirstSearch(vertex, goal,out vertexList);
                 }
 
             }

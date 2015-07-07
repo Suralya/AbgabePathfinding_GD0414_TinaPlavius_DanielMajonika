@@ -10,7 +10,7 @@ namespace Graphtesting
 
         private static UndirectedGraph<string, string> _graph;
         private static Vertex<string> _vertex1, _vertex2, _vertex3, _vertex4;
-        private static UndirectedEdge<string, string> _edge1, _edge2, _edge3, _edge4;
+        private static Edge<string, string> _edge1, _edge2, _edge3, _edge4;
 
         public void Initialize()
         {
@@ -20,10 +20,10 @@ namespace Graphtesting
             _vertex3 = _graph.CreateVertex("Isa");
             _vertex4 = _graph.CreateVertex("Robin");
 
-            _edge1 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex1, _vertex2);
-            _edge2 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex2, _vertex3);
-            _edge3 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex3, _vertex4);
-            _edge4 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex1, _vertex4);
+            _edge1 = _graph.AddEdge(_vertex1, _vertex2);
+            _edge2 = _graph.AddEdge(_vertex2, _vertex3);
+            _edge3 = _graph.AddEdge(_vertex3, _vertex4);
+            _edge4 = _graph.AddEdge(_vertex1, _vertex4);
         }
 
 
