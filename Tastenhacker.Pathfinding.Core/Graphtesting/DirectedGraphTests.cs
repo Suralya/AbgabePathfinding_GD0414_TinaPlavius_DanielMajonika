@@ -243,5 +243,19 @@ namespace Graphtesting
             _edge1 = _graph.AddEdge(_vertex1, _vertex2);
             _edge2 = _graph.AddEdge(_vertex1, _vertex2);
         }
+        [TestMethod]
+        public void IsAdjacencyLonelyVertex()
+        {
+            InitializeLoneVertexGraph();
+            bool[][] givenbools = _graph.Adjacency_Dir();
+            Assert.IsFalse(givenbools[0][0]);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(PathNotFoundException))]
+        public void IsAdjacencyException()
+        {
+            InitializeNullGraph();
+            _graph.Adjacency_Dir();
+        }
     }
 }

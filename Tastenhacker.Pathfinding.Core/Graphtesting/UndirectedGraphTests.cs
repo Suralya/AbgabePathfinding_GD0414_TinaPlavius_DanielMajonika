@@ -198,6 +198,20 @@ namespace Graphtesting
                 }
             }
         }
+        [TestMethod]
+        public void IsAdjacencyLonelyVertex()
+        {
+            InitializeLoneVertexGraph();
+            bool[][] givenbools = _graph.Adjacency_UnDir();
+            Assert.IsFalse(givenbools[0][0]);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(PathNotFoundException))]
+        public void IsAdjacencyException()
+        {
+            InitializeNullGraph();
+            _graph.Adjacency_UnDir();
+        }
 
         [TestMethod]
         public void AStarTestPathExists()

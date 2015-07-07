@@ -184,6 +184,8 @@ namespace Tastenhacker.Pathfinding.Core
                     arr[Iv][Ie] = true;
                 }
             }
+            if(arr.Length == 0)
+                throw new PathNotFoundException();
             return arr;
         }
     }

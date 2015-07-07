@@ -318,6 +318,8 @@ namespace Tastenhacker.Pathfinding.Core
                     arr[In][inv] = true;
                 }
             }
+            if (arr.Length == 0)
+                throw new PathNotFoundException();
             return arr;
         }
 
