@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tastenhacker.Pathfinding.Core;
 
@@ -10,51 +8,58 @@ namespace Graphtesting
     public class UnitTest1
     {
 
-        private static UndirectedGraph<string, string> graph = new UndirectedGraph<string, string>();
+        private static UndirectedGraph<string, string> _graph;
+        private static Vertex<string> _vertex1, _vertex2, _vertex3, _vertex4;
+        private static UndirectedEdge<string, string> _edge1, _edge2, _edge3, _edge4;
 
-        private static Vertex<string> Vertex1 = graph.CreateVertex("Penis");
-        private static Vertex<string> Vertex2 = graph.CreateVertex("Tomato");
-        private static Vertex<string> Vertex3 = graph.CreateVertex("Isa");
-        private static Vertex<string> Vertex4 = graph.CreateVertex("Robin");
+        public void Initialize()
+        {
+            _graph =  new UndirectedGraph<string, string>();
+            _vertex1 = _graph.CreateVertex("Penis");
+            _vertex2 = _graph.CreateVertex("Tomato");
+            _vertex3 = _graph.CreateVertex("Isa");
+            _vertex4 = _graph.CreateVertex("Robin");
 
-        static UndirectedEdge<string, string> Edge1 = (UndirectedEdge<string, string>) graph.AddEdge(Vertex1, Vertex2);
-        static UndirectedEdge<string, string> Edge2 = (UndirectedEdge<string, string>) graph.AddEdge(Vertex2, Vertex3);
-        static UndirectedEdge<string, string> Edge3 = (UndirectedEdge<string, string>) graph.AddEdge(Vertex3, Vertex4);
-        static UndirectedEdge<string, string> Edge4 = (UndirectedEdge<string, string>) graph.AddEdge(Vertex1, Vertex4);
-
-
+            _edge1 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex1, _vertex2);
+            _edge2 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex2, _vertex3);
+            _edge3 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex3, _vertex4);
+            _edge4 = (UndirectedEdge<string, string>)_graph.AddEdge(_vertex1, _vertex4);
+        }
 
 
         [TestMethod]
         public void VertexCreation()
         {
-            Assert.AreEqual(graph.VertexExists(Vertex1), true);
-            Assert.AreEqual(graph.VertexExists(Vertex2), true);
-            Assert.AreEqual(graph.VertexExists(Vertex3), true);
-            Assert.AreEqual(graph.VertexExists(Vertex4), true);
+            Initialize();
+            Assert.IsTrue(_graph.VertexExists(_vertex1));
+            Assert.IsTrue(_graph.VertexExists(_vertex2));
+            Assert.IsTrue(_graph.VertexExists(_vertex3));
+            Assert.IsTrue(_graph.VertexExists(_vertex4));
         }
 
         [TestMethod]
         public void EdgeCreation()
         {
-            Assert.IsTrue(graph.EdgeExists(Edge1));
-            Assert.IsTrue(graph.EdgeExists(Edge2));
-            Assert.IsTrue(graph.EdgeExists(Edge3));
-            Assert.IsTrue(graph.EdgeExists(Edge4));
+            Initialize();
+            Assert.IsTrue(_graph.EdgeExists(_edge1));
+            Assert.IsTrue(_graph.EdgeExists(_edge2));
+            Assert.IsTrue(_graph.EdgeExists(_edge3));
+            Assert.IsTrue(_graph.EdgeExists(_edge4));
         }
 
 
         [TestMethod]
         public void FindingInGraph()
         {
+            Initialize();
             //Graph.FindEdge
-            Assert.AreEqual(Edge1, graph.FindEdge(Vertex1, Vertex2));
-            Assert.AreEqual(Edge2, graph.FindEdge(Vertex2, Vertex3));
-            Assert.AreEqual(Edge3, graph.FindEdge(Vertex3, Vertex4));
-            Assert.AreEqual(Edge4, graph.FindEdge(Vertex1, Vertex4));
+            Assert.AreEqual(_edge1, _graph.FindEdge(_vertex1, _vertex2));
+            Assert.AreEqual(_edge2, _graph.FindEdge(_vertex2, _vertex3));
+            Assert.AreEqual(_edge3, _graph.FindEdge(_vertex3, _vertex4));
+            Assert.AreEqual(_edge4, _graph.FindEdge(_vertex1, _vertex4));
 
-            List<Vertex<string>> expectedVertices = new List<Vertex<string>> { Vertex1, Vertex3 };
-            List<Vertex<string>> givenVertices = graph.GetNeighbourVertices(Vertex2);
+            List<Vertex<string>> expectedVertices = new List<Vertex<string>> { _vertex1, _vertex3 };
+            List<Vertex<string>> givenVertices = _graph.GetNeighbourVertices(_vertex2);
 
             foreach (Vertex<string> vertex in givenVertices)
             {
@@ -64,10 +69,10 @@ namespace Graphtesting
             //Graph.GetNeighbourVertices
             Assert.AreEqual(0, expectedVertices.Count);
 
-            List<Edge<string, string>> expectedEdges1 = new List<Edge<string, string>> { Edge1, Edge4 };
-            List<Edge<string, string>> expectedEdges2 = new List<Edge<string, string>> { Edge2, Edge3 };
-            List<Edge<string, string>> givenEdges1 = graph.GetConnectedEdges(Vertex1);
-            List<Edge<string, string>> givenEdges2 = graph.GetConnectedEdges(Vertex3);
+            List<Edge<string, string>> expectedEdges1 = new List<Edge<string, string>> { _edge1, _edge4 };
+            List<Edge<string, string>> expectedEdges2 = new List<Edge<string, string>> { _edge2, _edge3 };
+            List<Edge<string, string>> givenEdges1 = _graph.GetConnectedEdges(_vertex1);
+            List<Edge<string, string>> givenEdges2 = _graph.GetConnectedEdges(_vertex3);
 
             foreach (Edge<string, string> edge in givenEdges1)
             {
@@ -87,14 +92,16 @@ namespace Graphtesting
         [TestMethod]
         public void IsCyclic()
         {
-            Assert.IsTrue(graph.IsAcyclic());
+            Initialize();
+            Assert.IsTrue(_graph.IsAcyclic());
         }
 
         [TestMethod]
         public void IsAdjacency()
         {
+            Initialize();
             bool[][] expectedBools = new bool[4][];
-            bool[][] givenBools = graph.Adjacency_UnDir();
+            bool[][] givenBools = _graph.Adjacency_UnDir();
 
             expectedBools[0] = new bool[1]; expectedBools[1] = new bool[2]; expectedBools[2] = new bool[3]; expectedBools[3] = new bool[4];
 
@@ -115,6 +122,7 @@ namespace Graphtesting
         [TestMethod]
         public void AStarTest()
         {
+            Initialize();
             //TODO Testing AStar
 
         }
@@ -124,27 +132,30 @@ namespace Graphtesting
         [TestMethod]
         public void Breadthfirstsearch()
         {
-            List<Vertex<string> > bread = new List<Vertex<string>>();
-            Assert.IsTrue(graph.BreadthFirstSearch(Vertex1, Vertex3,out bread));
+            Initialize();
+            List<Vertex<string> > bread;
+            Assert.IsTrue(_graph.BreadthFirstSearch(_vertex1, _vertex3,out bread));
         }
 
         [TestMethod]
         public void Depthfirstsearch()
         {
-            List<Vertex<string>> bread = new List<Vertex<string>>();
-            Assert.IsTrue(graph.DepthFirstSearch(Vertex1, Vertex3, out bread));
+            Initialize();
+            List<Vertex<string>> bread;
+            Assert.IsTrue(_graph.DepthFirstSearch(_vertex1, _vertex3, out bread));
         }
 
 
         [TestMethod]
         public void RemovingAndClearing()
         {
-            graph.RemoveEdge(Edge1);
-            Assert.IsFalse(graph.EdgeExists(Edge1));
-            graph.RemoveVertex(Vertex1);
-            Assert.IsFalse(graph.VertexExists(Vertex1));
-            graph.Clear();
-            Assert.AreEqual(graph, new UndirectedGraph<string, string>());
+            Initialize();
+            _graph.RemoveEdge(_edge1);
+            Assert.IsFalse(_graph.EdgeExists(_edge1));
+            _graph.RemoveVertex(_vertex1);
+            Assert.IsFalse(_graph.VertexExists(_vertex1));
+            _graph.Clear();
+            Assert.AreEqual(_graph, new UndirectedGraph<string, string>());
         }
     }
 }
