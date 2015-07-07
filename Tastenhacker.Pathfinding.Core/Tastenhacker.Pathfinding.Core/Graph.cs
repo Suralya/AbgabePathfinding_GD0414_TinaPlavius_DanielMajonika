@@ -407,37 +407,38 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
+        /// <param name="investigatedvertices">List of investigated Vertices</param>
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
-        public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal,out List<Vertex<V>>inspectedvertices)
+        public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal)
+        {
+            List<Vertex<V>> investigatedvertices;
+            return DepthFirstSearch(root, goal, out investigatedvertices);
+        }
+
+        /// <summary>
+        /// Search for Vertex in graph depth first
+        /// </summary>
+        /// <param name="root">Vertex to start search from</param>
+        /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
+        /// <param name="investigatedvertices">List of investigated Vertices</param>
+        /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
+        public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal, out List<Vertex<V>> investigatedvertices)
         {
             Dictionary<Vertex<V>, bool> marked = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
-            List<Vertex<V>> vertexList = new List<Vertex<V>> {root};
+            List<Vertex<V>> vertexList = new List<Vertex<V>> { root };
 
             List<Vertex<V>> neighbours = GetNeighbourVertices(root);
 
-            marked[root] = true;
-            vertexList.Add(root);
-
             foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref marked, ref vertexList)))
             {
-                marked[vertex] = true;
-                vertexList.Add(vertex);
-                if (vertex.Equals(goal))
+                if (DepthFirstSearch(vertex, goal, root, ref marked, ref vertexList))
                 {
-                    inspectedvertices = vertexList;
+                    investigatedvertices = vertexList;
                     return true;
                 }
-
-                List<Vertex<V>> temp = GetNeighbourVertices(vertex);
-                if (temp != null)
-                {
-                    //<todo>recursion handling</todo>
-                    //DepthFirstSearch(vertex, goal,out vertexList);
-                }
-
             }
-            inspectedvertices = vertexList;
+            investigatedvertices = vertexList;
             return false;
         }
 

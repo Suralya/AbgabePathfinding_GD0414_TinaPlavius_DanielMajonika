@@ -19,6 +19,7 @@ namespace Graphtesting
             _vertex2 = _graph.CreateVertex("Tomato");
             _vertex3 = _graph.CreateVertex("Isa");
             _vertex4 = _graph.CreateVertex("Robin");
+            _vertex5 = _graph.CreateVertex("Außenseiter");
 
             _edge1 = _graph.AddEdge(_vertex1, _vertex2);
             _edge2 = _graph.AddEdge(_vertex2, _vertex3);
@@ -179,8 +180,11 @@ namespace Graphtesting
         public void Depthfirstsearch()
         {
             Initialize();
-            List<Vertex<string>> bread;
-            Assert.IsTrue(_graph.DepthFirstSearch(_vertex1, _vertex3, out bread));
+            bool tmp = _graph.DepthFirstSearch(_vertex1, _vertex3);
+            bool tmp2 = _graph.DepthFirstSearch(_vertex1, _vertex5);
+            Assert.IsTrue(tmp);
+
+            Assert.IsFalse(tmp2);
         }
 
 
