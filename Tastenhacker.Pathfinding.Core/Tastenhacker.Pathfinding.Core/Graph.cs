@@ -426,13 +426,14 @@ namespace Tastenhacker.Pathfinding.Core
         {
             Dictionary<Vertex<V>, bool> marked = Vertices.Values.ToDictionary(vertex => vertex, vertex => false);
 
+            marked[root] = true;
             List<Vertex<V>> vertexList = new List<Vertex<V>> { root };
 
             List<Vertex<V>> neighbours = GetNeighbourVertices(root);
 
-            foreach (Vertex<V> vertex in neighbours.Where(vertex => DepthFirstSearch(vertex, goal, root, ref marked, ref vertexList)))
+            foreach (Vertex<V> vertex in neighbours)
             {
-                if (DepthFirstSearch(vertex, goal, root, ref marked, ref vertexList))
+                if (DepthFirstSearch(vertex, goal, marked, ref vertexList))
                 {
                     investigatedvertices = vertexList;
                     return true;
@@ -452,7 +453,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="mark">Dictionary to mark examined vertices</param>
         /// <param name="VertexList">The list to sinert examined vertices into</param>
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
-        private bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal, Vertex<V> parent, ref Dictionary<Vertex<V>, bool> mark, ref List<Vertex<V>> VertexList)
+        private bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal, Dictionary<Vertex<V>, bool> mark, ref List<Vertex<V>> VertexList)
         {
             VertexList.Add(root);
 
@@ -460,19 +461,14 @@ namespace Tastenhacker.Pathfinding.Core
             {
                 return true;
             }
-            List<Vertex<V>> neighbours = GetNeighbourVertices(root);
-
-            neighbours.Remove(parent);
+            List<Vertex<V>> neighbours = GetNeighbourVertices(root).Where(n => !mark[n]).ToList();
 
             foreach (Vertex<V> vertex in neighbours)
             {
-                if (mark[vertex] == false)
+                mark[vertex] = true;
+                if (DepthFirstSearch(vertex, goal, mark, ref VertexList))
                 {
-                    mark[vertex] = true;
-                    if (DepthFirstSearch(vertex, goal, root, ref mark, ref VertexList))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
