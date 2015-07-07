@@ -38,7 +38,7 @@ namespace Tastenhacker.Pathfinding.Core
             Vertices = new Dictionary<UInt64, Vertex<V>>();
             _id = ++idGenerator;
 
-            this._name = name ?? "graph-" + ID;
+            _name = name ?? "graph-" + ID;
         }
 
         /// <summary>
@@ -123,6 +123,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// Returns a List of all neighbour vertices of this Vertex
         /// </summary>
         /// <param name="vertex">Vertex to search neighbours for</param>
+        /// <param name="edgeFilter">Filter for Edges who are not getting in the neighbour List</param>
         /// <returns></returns>
         public List<Vertex<V>> GetNeighbourVertices(Vertex<V> vertex, FilterEdges<E, V> edgeFilter = null)
         {
@@ -371,6 +372,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
+        /// <param name="inspectedvertices">List of inspected Vertices</param>
         /// <returns>Orderd list of vertices examined while searching for goal breadth first</returns>
         public bool BreadthFirstSearch(Vertex<V> root, Vertex<V> goal, out List<Vertex<V>>inspectedvertices)
         {
@@ -413,7 +415,6 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
-        /// <param name="investigatedvertices">List of investigated Vertices</param>
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
         public bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal)
         {
@@ -455,13 +456,12 @@ namespace Tastenhacker.Pathfinding.Core
         /// </summary>
         /// <param name="root">Vertex to start search from</param>
         /// <param name="goal">Vertex to find, null to return all reachable vertices</param>
-        /// <param name="parent">Last examined parent</param>
         /// <param name="mark">Dictionary to mark examined vertices</param>
-        /// <param name="VertexList">The list to sinert examined vertices into</param>
+        /// <param name="vertexList">The list to sinert examined vertices into</param>
         /// <returns>Ordered list of vertice examined while searching for goal depth first</returns>
-        private bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal, Dictionary<Vertex<V>, bool> mark, ref List<Vertex<V>> VertexList)
+        private bool DepthFirstSearch(Vertex<V> root, Vertex<V> goal, Dictionary<Vertex<V>, bool> mark, ref List<Vertex<V>> vertexList)
         {
-            VertexList.Add(root);
+            vertexList.Add(root);
 
             if (root.Equals(goal))
             {
@@ -472,7 +472,7 @@ namespace Tastenhacker.Pathfinding.Core
             foreach (Vertex<V> vertex in neighbours)
             {
                 mark[vertex] = true;
-                if (DepthFirstSearch(vertex, goal, mark, ref VertexList))
+                if (DepthFirstSearch(vertex, goal, mark, ref vertexList))
                 {
                     return true;
                 }
@@ -492,7 +492,7 @@ namespace Tastenhacker.Pathfinding.Core
 
             while (mark.Count != 0)
             {
-                List<Vertex<V>> result = new List<Vertex<V>>();
+                List<Vertex<V>> result;
                 BreadthFirstSearch(mark[0], null, out result);
 
                 Graph<E, V> graph = NewGraph();

@@ -12,12 +12,12 @@ namespace Tastenhacker.Pathfinding.Core
 {
     public class EdgeEnumerator<E,V> : IEnumerator
     {
-        private List<Edge<E,V>> _edges;
+        private readonly List<Edge<E,V>> _edges;
         private int _position = -1;
 
         public EdgeEnumerator(List<Edge<E,V>> edges)
         {
-            this._edges = edges;
+            _edges = edges;
         }
 
         public object Current

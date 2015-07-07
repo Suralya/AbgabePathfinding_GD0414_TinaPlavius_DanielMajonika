@@ -17,7 +17,7 @@ namespace Tastenhacker.Pathfinding.Core
 
         public VertexEnumerator(List<Vertex<V>> vertices)
         {
-            this._vertices = vertices;
+            _vertices = vertices;
         }
 
         public object Current
