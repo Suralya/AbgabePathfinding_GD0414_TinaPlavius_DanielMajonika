@@ -12,7 +12,7 @@ namespace Tastenhacker.Pathfinding.Core
 {
 
     /// <summary>
-    /// Represenst the heuristic the user of the graph class has to prevent, heuristic helps the AStar to be faster than the Dijkstra
+    /// Represent the heuristic the user of the graph class has to prevent, heuristic helps the AStar to be faster than the Dijkstra
     /// </summary>
     public delegate int HeuristicDelegate<E, V>(Vertex<V> start, Vertex<V> finish, Graph<E, V> graph);
 
@@ -142,6 +142,15 @@ namespace Tastenhacker.Pathfinding.Core
             //TODO path!
             path.Reverse();
             return path;
+        }
+
+        public Path<Vertex<V>> AStar(Vertex<V> start, Vertex<V> finish, int maxWeight)
+        {
+            //Filter == false = kein filter
+            FilterEdges<E, V> tmpEdges = edge => false;
+            FilterVertex<V> tmpVertex = edge => false;
+            HeuristicDelegate<E, V> tmpHeuristicDelegate = (vertex, finish1, graph) => 0;
+            return AStar(start, finish, maxWeight, tmpEdges, tmpVertex, tmpHeuristicDelegate);
         }
 
         /// <summary>
