@@ -66,7 +66,9 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="start">Represents the start-Vertex</param>
         /// <param name="finish">Represents the finish-Vertex</param>
         /// <param name="maxWeight">Represents the max-edge-weight that can be passed by the algorithm</param>
+        /// <param name="vertexFilter">Filter for Vertices who are NOT in the Search</param>
         /// <param name="heuristicDelegate">Represents a heuristic to helpt the AStar to be faster</param>
+        /// <param name="edgeFilter">Filter for Edges who can NOT be crossed</param>
         /// <returns>Returns the shortest path if available, returns NULL if no path exists</returns>
         public Path<Vertex<V>> AStar(Vertex<V> start, Vertex<V> finish, int maxWeight, FilterEdges<E, V> edgeFilter, FilterVertex<V> vertexFilter, HeuristicDelegate<E,V> heuristicDelegate)
         {
@@ -303,15 +305,15 @@ namespace Tastenhacker.Pathfinding.Core
                 foreach (Vertex<V> nv in neighbours)
                 {
                     int In = vertexList.IndexOf(v);
-                    int Inv = vertexList.IndexOf(nv);
-                    System.Diagnostics.Debug.WriteLine("Index of nv " + Inv + "\n" + "Index of n " + Inv);
-                    if (In < Inv)
+                    int inv = vertexList.IndexOf(nv);
+                    System.Diagnostics.Debug.WriteLine("Index of nv " + inv + "\n" + "Index of n " + inv);
+                    if (In < inv)
                     {
                         int exchange = In;
-                        In = Inv;
-                        Inv = exchange;
+                        In = inv;
+                        inv = exchange;
                     }
-                    arr[In][Inv] = true;
+                    arr[In][inv] = true;
                 }
             }
             return arr;

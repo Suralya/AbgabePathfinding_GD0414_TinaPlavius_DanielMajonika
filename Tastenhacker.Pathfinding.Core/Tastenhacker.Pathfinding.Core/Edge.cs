@@ -17,7 +17,7 @@ namespace Tastenhacker.Pathfinding.Core
     {
         private readonly UInt64 _id;
         private static UInt64 idGenerator = 0;
-        private string _name;
+        private readonly string _name;
 
         public bool Marked;
 
@@ -73,10 +73,10 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Create new edge
         /// </summary>
-        /// <param _name="baseVertex">First Vertex</param>
-        /// <param _name="targetVertex">Second Vertex</param>
-        /// <param _name="weight">Edge weight</param>
-        /// <param _name="name">Edge _name</param>
+        /// <param  name="baseVertex">First Vertex</param>
+        /// <param  name="targetVertex">Second Vertex</param>
+        /// <param  name="weight">Edge weight</param>
+        /// <param  name="name">Edge _name</param>
         protected Edge(Vertex<V> baseVertex, Vertex<V> targetVertex, int weight = 0, string name = null)
         {
             BaseVertex = baseVertex;
@@ -85,13 +85,13 @@ namespace Tastenhacker.Pathfinding.Core
             _id = ++idGenerator;
             Marked = false;
 
-            this._name = name ?? "edge-" + ID;
+            _name = name ?? "edge-" + ID;
         }
 
         /// <summary>
         /// Check if edge has the given ID
         /// </summary>
-        /// <param _name="_ID">ID to check</param>
+        /// <param  name="_ID">ID to check</param>
         /// <returns></returns>
         public bool HasID(UInt64 _ID)
         {
@@ -106,7 +106,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Checks for value equality
         /// </summary>
-        /// <param _name="obj">Object to check against</param>
+        /// <param name="obj">Object to check against</param>
         /// <returns>true if obj is of same type and value equal</returns>
         public override bool Equals(object obj)
         {
@@ -123,7 +123,7 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// Checks for value equality
         /// </summary>
-        /// <param _name="edge">Edge to check against</param>
+        /// <param name="edge">Edge to check against</param>
         /// <returns>true if base vertices and target vertices are the same</returns>
         public virtual bool Equals(Edge<E, V> edge)
         {
