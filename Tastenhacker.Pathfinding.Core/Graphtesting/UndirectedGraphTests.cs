@@ -214,6 +214,14 @@ namespace Graphtesting
         }
 
         [TestMethod]
+        [ExpectedException(typeof(PathNotFoundException))]
+        public void AStarTestPathExistsNot()
+        {
+            Initialize();
+            _graph.AStar(_vertex1, _vertex5, 40);
+        }
+
+        [TestMethod]
         public void AStarTestPathExists()
         {
             InitializePathfindingGraph();
@@ -226,6 +234,35 @@ namespace Graphtesting
             }
             Assert.AreEqual(0, expectedPath.Count);
         }
+
+        [TestMethod]
+        public void AStarTestPathExistsStartisGoalwoEdges()
+        {
+            InitializeLoneVertexGraph();
+            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> { _vertex1};
+            Path<Vertex<string>> givenPath = _graph.AStar(_vertex1, _vertex1, 40);
+
+            foreach (Vertex<string> vertex in givenPath)
+            {
+                expectedPath.Remove(vertex);
+            }
+            Assert.AreEqual(0, expectedPath.Count);
+        }
+
+        [TestMethod]
+        public void AStarTestPathExistsStartisGoalwEdges()
+        {
+            InitializeStarGraph();
+            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> { _vertex1 };
+            Path<Vertex<string>> givenPath = _graph.AStar(_vertex1, _vertex1, 40);
+
+            foreach (Vertex<string> vertex in givenPath)
+            {
+                expectedPath.Remove(vertex);
+            }
+            Assert.AreEqual(0, expectedPath.Count);
+        }
+
         [TestMethod]
         public void AStarTestPathisCorrect()
         {
