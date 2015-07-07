@@ -44,10 +44,16 @@ namespace Tastenhacker.Pathfinding.Core
         /// <summary>
         /// </summary>
         /// <param name="v"></param>
-        /// <todo>handle exceptions</todo>
         protected void AddVertex(Vertex<V> v)
         {
-            Vertices.Add(v.ID, v);
+            if (v != null)
+            {
+                Vertices.Add(v.ID, v);
+            }
+            else
+            {
+                throw new VertexNotFoundException();
+            }
         }
 
         /// <summary>
