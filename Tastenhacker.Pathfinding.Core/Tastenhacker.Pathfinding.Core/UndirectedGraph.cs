@@ -37,6 +37,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="b">second Vertex of the edge to test</param>
         public override bool EdgeExists(Vertex<V> a, Vertex<V> b)
         {
+            if (!VertexExists(a) || !VertexExists(b))
+                throw new VertexNotFoundException();
             return EdgeExists(new UndirectedEdge<E, V>(a, b));
         }
 

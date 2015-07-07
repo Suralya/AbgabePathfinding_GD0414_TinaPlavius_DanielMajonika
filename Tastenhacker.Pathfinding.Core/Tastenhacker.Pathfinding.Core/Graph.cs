@@ -97,6 +97,8 @@ namespace Tastenhacker.Pathfinding.Core
         /// <param name="vertex">Vertex to check</param>
         public bool VertexExists(Vertex<V> vertex)
         {
+            if (vertex == null)
+                throw new VertexNotFoundException();
             return Vertices.ContainsKey(vertex.ID);
         }
 

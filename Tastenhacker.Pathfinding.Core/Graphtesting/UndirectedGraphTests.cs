@@ -27,6 +27,11 @@ namespace Graphtesting
             _edge4 = _graph.AddEdge(_vertex1, _vertex4);
         }
 
+        public void InitializeNullGraph()
+        {
+            _graph = new UndirectedGraph<string, string>();
+        }
+
         public void InitializeTwoArmedGraph()
         {
             _graph = new UndirectedGraph<string, string>();
@@ -250,6 +255,50 @@ namespace Graphtesting
             Assert.IsFalse(_graph.VertexExists(_vertex1));
             _graph.Clear();
             Assert.AreEqual(_graph, new UndirectedGraph<string, string>());
+        }
+        [TestMethod]
+        public void FindNotFound()
+        {
+            InitializeNullGraph();
+            List<Edge<string, string>> givenEdges = _graph.GetEdges();
+
+            Assert.AreEqual(0, givenEdges.Count);
+
+            List<Vertex<string>> givenVertices = _graph.GetVertices();
+
+            Assert.AreEqual(0, givenVertices.Count);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(EdgeNotFoundException))]
+        public void EdgeRemovingException()
+        {
+            InitializeNullGraph();
+            _graph.RemoveEdge(_edge1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(VertexNotFoundException))]
+        public void VertexRemovingException()
+        {
+            InitializeNullGraph();
+            _graph.RemoveVertex(_vertex1);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(VertexNotFoundException))]
+        public void EdgeCreatingException()
+        {
+            Initialize();
+            _graph.AddEdge(_vertex4, _vertex8);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(DuplicateEdgeException))]
+        public void AddingDuplicateEdgeException()
+        {
+            Initialize();
+            _edge1 = _graph.AddEdge(_vertex1, _vertex2);
+            _edge2 = _graph.AddEdge(_vertex1, _vertex2);
         }
     }
 }

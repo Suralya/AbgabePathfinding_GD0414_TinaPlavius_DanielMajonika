@@ -28,7 +28,8 @@ namespace Tastenhacker.Pathfinding.Core
         public override bool EdgeExists(Vertex<V> from, Vertex<V> to)
         {
             DirectedEdge<E, V> edge;
-
+            if(!VertexExists(from) || !VertexExists(to))
+                throw new VertexNotFoundException();
             return EdgeExists(from, to, out edge);
         }
 
