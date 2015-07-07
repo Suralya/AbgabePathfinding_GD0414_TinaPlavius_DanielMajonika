@@ -154,9 +154,15 @@ namespace Graphtesting
         [TestMethod]
         public void AStarTest()
         {
-            Initialize();
-            //TODO Testing AStar
+            InitializePathfindingGraph();
+            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> {_vertex1,_vertex5,_vertex9,_vertex7};
+            Path<Vertex<string>> givenPath = _graph.AStar(_vertex1, _vertex7, 40);
 
+            foreach (Vertex<string> vertex in givenPath)
+            {
+                expectedPath.Remove(vertex);
+            }
+            Assert.AreEqual(0,expectedPath.Count);
         }
 
 
