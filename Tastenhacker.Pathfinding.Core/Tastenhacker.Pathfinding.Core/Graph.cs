@@ -168,6 +168,9 @@ namespace Tastenhacker.Pathfinding.Core
 
             List<Vertex<V>> vertexList = GetVertices();
 
+            if (vertexList.Count == 1)
+                return false;
+
             bool lookAtVertices;
             int markedVertexCount = 0;
 
@@ -179,7 +182,7 @@ namespace Tastenhacker.Pathfinding.Core
                 {
                     if (vertex.Marked == false)
                     {
-                        if (vertex.InDegree <= 1 || vertex.OutDegree <= 1)
+                        if (vertex.InDegree == 0 || vertex.OutDegree == 0)
                         {
                             lookAtVertices = true;
                             markedVertexCount++;
@@ -207,7 +210,6 @@ namespace Tastenhacker.Pathfinding.Core
                 }
             }
             while (lookAtVertices);
-
             return markedVertexCount == vertexList.Count;
         }
 

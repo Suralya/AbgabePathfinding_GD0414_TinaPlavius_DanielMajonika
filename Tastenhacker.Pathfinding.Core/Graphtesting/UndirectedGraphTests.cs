@@ -127,6 +127,31 @@ namespace Graphtesting
             Assert.IsTrue(_graph.EdgeExists(_edge4));
         }
 
+        [TestMethod]
+        public void IsCyclicNullGraph()
+        {
+            InitializeNullGraph();
+            Assert.IsFalse(_graph.IsAcyclic());
+        }
+        [TestMethod]
+        public void IsCyclicTwoArmedGraph()
+        {
+            InitializeTwoArmedGraph();
+            Assert.IsTrue(_graph.IsAcyclic());
+        }
+        [TestMethod]
+        public void IsCyclicLoneVertexGraph()
+        {
+            InitializeLoneVertexGraph();
+            Assert.IsFalse(_graph.IsAcyclic());
+        }
+        [TestMethod]
+        public void IsCyclicStarGraph()
+        {
+            InitializeStarGraph();
+            bool givenbool = _graph.IsAcyclic();
+            Assert.IsFalse(_graph.IsAcyclic());
+        }
 
         [TestMethod]
         public void FindingInGraph()
@@ -223,6 +248,20 @@ namespace Graphtesting
 
         [TestMethod]
         public void AStarTestPathExists()
+        {
+            InitializePathfindingGraph();
+            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> { _vertex1, _vertex5, _vertex9, _vertex7 };
+            Path<Vertex<string>> givenPath = _graph.AStar(_vertex1, _vertex7, 2000);
+
+            foreach (Vertex<string> vertex in givenPath)
+            {
+                expectedPath.Remove(vertex);
+            }
+            Assert.AreEqual(0, expectedPath.Count);
+        }
+
+        [TestMethod]
+        public void AStarTestPathExistsandGoesMostValuablePath()
         {
             InitializePathfindingGraph();
             Path<Vertex<string>> expectedPath = new Path<Vertex<string>> { _vertex1, _vertex5, _vertex9, _vertex7 };
