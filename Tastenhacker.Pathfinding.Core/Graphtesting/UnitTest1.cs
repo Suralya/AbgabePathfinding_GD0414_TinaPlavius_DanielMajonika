@@ -46,6 +46,13 @@ namespace Graphtesting
             _edge7 = _graph.AddEdge(_vertex5, _vertex6);
         }
 
+        public void InitializeLoneVertexGraph()
+        {
+            _graph = new UndirectedGraph<string, string>();
+            _vertex1 = _graph.CreateVertex("MrLonely");
+
+        }
+
         public void InitializePathfindingGraph()
         {
             _graph = new UndirectedGraph<string, string>();
