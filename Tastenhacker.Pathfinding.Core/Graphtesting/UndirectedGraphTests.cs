@@ -195,20 +195,30 @@ namespace Graphtesting
         }
 
         [TestMethod]
-        public void AStarTest()
+        public void AStarTestPathExists()
         {
             InitializePathfindingGraph();
-            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> {_vertex1,_vertex5,_vertex9,_vertex7};
+            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> { _vertex1, _vertex5, _vertex9, _vertex7 };
             Path<Vertex<string>> givenPath = _graph.AStar(_vertex1, _vertex7, 40);
 
             foreach (Vertex<string> vertex in givenPath)
             {
                 expectedPath.Remove(vertex);
             }
-            Assert.AreEqual(0,expectedPath.Count);
+            Assert.AreEqual(0, expectedPath.Count);
         }
+        [TestMethod]
+        public void AStarTestPathisCorrect()
+        {
+            InitializePathfindingGraph();
+            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> { _vertex1, _vertex5, _vertex9, _vertex7 };
+            Path<Vertex<string>> givenPath = _graph.AStar(_vertex1, _vertex7, 40);
 
-
+            for (int i = 0; i < expectedPath.Count - 1; i++)
+            {
+                Assert.AreEqual(expectedPath[i], givenPath[i]);
+            }
+        }
 
         [TestMethod]
         public void Breadthfirstsearch()

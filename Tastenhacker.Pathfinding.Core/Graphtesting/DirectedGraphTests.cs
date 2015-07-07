@@ -192,5 +192,29 @@ namespace Graphtesting
             _graph.Clear();
             Assert.AreEqual(_graph, new DirectedGraph<string, string>());
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(EdgeNotFoundException))]
+        public void EdgeRemovingException()
+        {
+            Initialize();
+            _graph.Clear();
+            _graph.RemoveEdge(_edge1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(VertexNotFoundException))]
+        public void VertexRemovingException()
+        {
+            Initialize();
+            _graph.Clear();
+            _graph.RemoveVertex(_vertex1);
+        }
+        [TestMethod]
+        public void EdgeCreatingException()
+        {
+            Initialize();
+            _graph.AddEdge(_vertex4,_vertex5);
+        }
     }
 }
