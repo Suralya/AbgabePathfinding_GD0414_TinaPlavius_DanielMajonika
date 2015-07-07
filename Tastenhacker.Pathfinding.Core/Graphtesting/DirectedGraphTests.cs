@@ -110,5 +110,134 @@ namespace Graphtesting
             Assert.IsTrue(_graph.VertexExists(_vertex3));
             Assert.IsTrue(_graph.VertexExists(_vertex4));
         }
+
+        [TestMethod]
+        public void EdgeCreation()
+        {
+            Initialize();
+            Assert.IsTrue(_graph.EdgeExists(_edge1));
+            Assert.IsTrue(_graph.EdgeExists(_edge2));
+            Assert.IsTrue(_graph.EdgeExists(_edge3));
+            Assert.IsTrue(_graph.EdgeExists(_edge4));
+        }
+
+      /*  [TestMethod]
+        public void FindingInGraph()
+        {
+            Initialize();
+            //Graph.FindEdge
+            Assert.AreEqual(_edge1, _graph.FindEdge(_vertex1, _vertex2));
+            Assert.AreEqual(_edge2, _graph.FindEdge(_vertex2, _vertex3));
+            Assert.AreEqual(_edge3, _graph.FindEdge(_vertex3, _vertex4));
+            Assert.AreEqual(_edge4, _graph.FindEdge(_vertex1, _vertex4));
+
+            List<Vertex<string>> expectedVertices = new List<Vertex<string>> { _vertex1, _vertex3 };
+            List<Vertex<string>> givenVertices = _graph.GetNeighbourVertices(_vertex2);
+
+            foreach (Vertex<string> vertex in givenVertices)
+            {
+                expectedVertices.Remove(vertex);
+            }
+
+            //Graph.GetNeighbourVertices
+            Assert.AreEqual(0, expectedVertices.Count);
+
+            List<Edge<string, string>> expectedEdges1 = new List<Edge<string, string>> { _edge1, _edge4 };
+            List<Edge<string, string>> expectedEdges2 = new List<Edge<string, string>> { _edge2, _edge3 };
+            List<Edge<string, string>> givenEdges1 = _graph.GetConnectedEdges(_vertex1);
+            List<Edge<string, string>> givenEdges2 = _graph.GetConnectedEdges(_vertex3);
+
+            foreach (Edge<string, string> edge in givenEdges1)
+            {
+                expectedEdges1.Remove(edge);
+            }
+
+            foreach (Edge<string, string> edge in givenEdges2)
+            {
+                expectedEdges2.Remove(edge);
+            }
+
+            //Graph.GetConnectedEdges
+            Assert.AreEqual(0, expectedEdges1.Count);
+            Assert.AreEqual(0, expectedEdges2.Count);
+        }*/
+
+        [TestMethod]
+        public void IsCyclic()
+        {
+            Initialize();
+            Assert.IsTrue(_graph.IsAcyclic());
+        }
+
+        [TestMethod]
+        public void IsAdjacency()
+        {
+            Initialize();
+            bool[][] expectedBools = new bool[4][];
+            bool[][] givenBools = _graph.Adjacency_Dir();
+
+            expectedBools[0] = new bool[1]; expectedBools[1] = new bool[2]; expectedBools[2] = new bool[3]; expectedBools[3] = new bool[4];
+
+            expectedBools[0][0] = false;
+            expectedBools[1][0] = true; expectedBools[1][1] = false;
+            expectedBools[2][0] = false; expectedBools[2][1] = true; expectedBools[2][2] = false;
+            expectedBools[3][0] = true; expectedBools[3][1] = false; expectedBools[3][2] = true; expectedBools[3][3] = false;
+
+            for (int i = 0; i < expectedBools.Length - 1; i++)
+            {
+                for (int j = 0; j < expectedBools[i].Length - 1; j++)
+                {
+                    Assert.AreEqual(expectedBools[i][j], givenBools[i][j]);
+                }
+            }
+        }
+
+    /*    [TestMethod]
+        public void AStarTest()
+        {
+            InitializePathfindingGraph();
+            Path<Vertex<string>> expectedPath = new Path<Vertex<string>> { _vertex1, _vertex5, _vertex9, _vertex7 };
+            Path<Vertex<string>> givenPath = _graph.AStar(_vertex1, _vertex7, 40);
+
+            foreach (Vertex<string> vertex in givenPath)
+            {
+                expectedPath.Remove(vertex);
+            }
+            Assert.AreEqual(0, expectedPath.Count);
+        }*/
+
+
+
+        [TestMethod]
+        public void Breadthfirstsearch()
+        {
+            Initialize();
+            List<Vertex<string>> bread;
+            Assert.IsTrue(_graph.BreadthFirstSearch(_vertex1, _vertex3, out bread));
+        }
+
+        [TestMethod]
+        public void Depthfirstsearch()
+        {
+            Initialize();
+            bool tmp = _graph.DepthFirstSearch(_vertex1, _vertex3);
+            bool tmp2 = _graph.DepthFirstSearch(_vertex1, _vertex5);
+            Assert.IsTrue(tmp);
+
+            Assert.IsFalse(tmp2);
+        }
+
+
+        [TestMethod]
+        public void RemovingAndClearing()
+        {
+            Initialize();
+            _graph.RemoveEdge(_edge1);
+            Assert.IsFalse(_graph.EdgeExists(_edge1));
+            _graph.RemoveVertex(_vertex1);
+            Assert.IsFalse(_graph.VertexExists(_vertex1));
+            _graph.Clear();
+            Assert.AreEqual(_graph, new UndirectedGraph<string, string>());
+        }
     }
 }

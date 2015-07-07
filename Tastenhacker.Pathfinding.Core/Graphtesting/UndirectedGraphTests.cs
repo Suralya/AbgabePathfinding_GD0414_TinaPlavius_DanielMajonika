@@ -5,7 +5,7 @@ using Tastenhacker.Pathfinding.Core;
 namespace Graphtesting
 {
     [TestClass]
-    public class UnitTest1
+    public class UndirectedGraphTests
     {
 
         private static UndirectedGraph<string, string> _graph;
