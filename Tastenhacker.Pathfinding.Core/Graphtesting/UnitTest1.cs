@@ -27,6 +27,32 @@ namespace Graphtesting
             _edge4 = _graph.AddEdge(_vertex1, _vertex4);
         }
 
+        public void InitializeTwoArmedGraph()
+        {
+            _graph = new UndirectedGraph<string, string>();
+            _vertex1 = _graph.CreateVertex("A");
+            _vertex2 = _graph.CreateVertex("B");
+            _vertex3 = _graph.CreateVertex("C");
+            _vertex4 = _graph.CreateVertex("D");
+            _vertex5 = _graph.CreateVertex("E");
+            _vertex5 = _graph.CreateVertex("F");
+
+            _edge1 = _graph.AddEdge(_vertex1, _vertex2);
+            _edge2 = _graph.AddEdge(_vertex1, _vertex3);
+            _edge3 = _graph.AddEdge(_vertex2, _vertex3);
+            _edge4 = _graph.AddEdge(_vertex3, _vertex4);
+            _edge5 = _graph.AddEdge(_vertex4, _vertex5);
+            _edge6 = _graph.AddEdge(_vertex4, _vertex6);
+            _edge7 = _graph.AddEdge(_vertex5, _vertex6);
+        }
+
+        public void InitializeLoneVertexGraph()
+        {
+            _graph = new UndirectedGraph<string, string>();
+            _vertex1 = _graph.CreateVertex("MrLonely");
+
+        }
+
         public void InitializePathfindingGraph()
         {
             _graph = new UndirectedGraph<string, string>();
