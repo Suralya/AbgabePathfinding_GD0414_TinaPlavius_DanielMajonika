@@ -40,7 +40,7 @@ namespace Graphtesting
             _vertex3 = _graph.CreateVertex("C");
             _vertex4 = _graph.CreateVertex("D");
             _vertex5 = _graph.CreateVertex("E");
-            _vertex5 = _graph.CreateVertex("F");
+            _vertex6 = _graph.CreateVertex("F");
 
             _edge1 = _graph.AddEdge(_vertex1, _vertex2);
             _edge2 = _graph.AddEdge(_vertex1, _vertex3);
@@ -131,26 +131,26 @@ namespace Graphtesting
         public void IsCyclicNullGraph()
         {
             InitializeNullGraph();
-            Assert.IsFalse(_graph.IsAcyclic());
+            Assert.IsTrue(_graph.IsAcyclic());
         }
         [TestMethod]
         public void IsCyclicTwoArmedGraph()
         {
             InitializeTwoArmedGraph();
-            Assert.IsTrue(_graph.IsAcyclic());
+            Assert.IsFalse(_graph.IsAcyclic());
         }
         [TestMethod]
         public void IsCyclicLoneVertexGraph()
         {
             InitializeLoneVertexGraph();
-            Assert.IsFalse(_graph.IsAcyclic());
+            Assert.IsTrue(_graph.IsAcyclic());
         }
         [TestMethod]
         public void IsCyclicStarGraph()
         {
             InitializeStarGraph();
             bool givenbool = _graph.IsAcyclic();
-            Assert.IsFalse(_graph.IsAcyclic());
+            Assert.IsTrue(_graph.IsAcyclic());
         }
 
         [TestMethod]
