@@ -191,6 +191,7 @@ namespace Tastenhacker.Pathfinding.Core
 
         public override bool IsAcyclic()
         {
+            UnmarkAllObjects();
             if (Vertices.Count == 1)
                 return true;
 
@@ -199,44 +200,47 @@ namespace Tastenhacker.Pathfinding.Core
 
             if (Vertices.Count == 0)
                 throw new NoVertexException();
-            openList.Add(AStarVertex<V>.Create(Vertices.Values.FirstOrDefault(i => i != null)));
 
-            while (openList.Count != 0)
+            while (Vertices.Values.Count(i => i.Marked) != Vertices.Values.Count)
             {
-
-                AStarVertex<V> self = openList.FirstOrDefault();
-
-                openList.Remove(self);
-                closedList.Add(self);
-
-
-                List<Edge<E, V>> sourroundingEdges = GetOutgoingEdges(self.Vertex);
-                if (sourroundingEdges.Count == 0)
+                openList.Add(AStarVertex<V>.Create(Vertices.Values.FirstOrDefault(i => i != null && !i.Marked)));
+                while (openList.Count != 0)
                 {
-                    closedList.Remove(self);
-                }
 
-                foreach (Edge<E, V> edge in sourroundingEdges)
-                {
-                    //find the other Vertex (NOT ME!)
-                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.Vertex)) ? edge.TargetVertex : edge.BaseVertex;
+                    AStarVertex<V> self = openList.FirstOrDefault();
 
+                    openList.Remove(self);
+                    closedList.Add(self);
 
-                    AStarVertex<V> neigbour;
-                    if (!openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe))
+                    Vertices.Values.First(i => Equals(i, self.Vertex)).Marked = true;
+
+                    List<Edge<E, V>> sourroundingEdges = GetOutgoingEdges(self.Vertex);
+                    if (sourroundingEdges.Count == 0)
                     {
-                        neigbour = AStarVertex<V>.Create(notMe);
-                        neigbour.Origin = self;
-                        openList.Add(neigbour);
-                        //neighbour schon in der openlist ist == Cyklisch
+                        closedList.Remove(self);
                     }
-                    else
-                    {
-                        if (closedList.ContainsVertex(notMe))
-                        {
-                            return false;
-                        }
 
+                    foreach (Edge<E, V> edge in sourroundingEdges)
+                    {
+                        //find the other Vertex (NOT ME!)
+                        Vertex<V> notMe = (edge.BaseVertex.Equals(self.Vertex)) ? edge.TargetVertex : edge.BaseVertex;
+
+
+                        if (!openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe))
+                        {
+                            AStarVertex<V> neigbour = AStarVertex<V>.Create(notMe);
+                            neigbour.Origin = self;
+                            openList.Add(neigbour);
+                            //neighbour schon in der openlist ist == Cyklisch
+                        }
+                        else
+                        {
+                            if (closedList.ContainsVertex(notMe))
+                            {
+                                return false;
+                            }
+
+                        }
                     }
                 }
             }
