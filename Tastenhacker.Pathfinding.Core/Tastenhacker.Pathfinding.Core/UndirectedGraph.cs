@@ -329,5 +329,55 @@ namespace Tastenhacker.Pathfinding.Core
 
             return edges.Single(e => e.BaseVertex.Equals(neighbour) || e.TargetVertex.Equals(neighbour));
         }
+
+        public override bool IsAcyclic()
+        {
+            if (Vertices.Count == 1)
+                return true;
+
+            AStarVertexList<V> openList = new AStarVertexList<V>();
+            AStarVertexList<V> closedList = new AStarVertexList<V>();
+
+            if (Vertices.Count == 0)
+                throw new NoVertexException();
+            openList.Add(AStarVertex<V>.Create(Vertices.Values.FirstOrDefault(i => i != null)));
+
+            while (openList.Count != 0)
+            {
+
+                AStarVertex<V> self = openList.FirstOrDefault();
+
+                openList.Remove(self);
+                closedList.Add(self);
+
+
+                List<Edge<E, V>> sourroundingEdges = GetConnectedEdges(self.Vertex);
+
+                foreach (Edge<E, V> edge in sourroundingEdges)
+                {
+                    //find the other Vertex (NOT ME!)
+                    Vertex<V> notMe = (edge.BaseVertex.Equals(self.Vertex)) ? edge.TargetVertex : edge.BaseVertex;
+
+
+                    AStarVertex<V> neigbour;
+                    if (!openList.ContainsVertex(notMe) && !closedList.ContainsVertex(notMe))
+                    {
+                        neigbour = AStarVertex<V>.Create(notMe);
+                        neigbour.Origin = self;
+                        openList.Add(neigbour);
+                        //neighbour schon in der openlist ist == Cyklisch
+                    }
+                    else
+                    {
+                        if (openList.ContainsVertex(notMe))
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+            }
+            return true;
+        }
     }
 }

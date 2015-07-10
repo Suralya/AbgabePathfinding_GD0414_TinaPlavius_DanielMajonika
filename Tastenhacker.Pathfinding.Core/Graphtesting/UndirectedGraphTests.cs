@@ -128,10 +128,11 @@ namespace Graphtesting
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NoVertexException))]
         public void IsCyclicNullGraph()
         {
             InitializeNullGraph();
-            Assert.IsTrue(_graph.IsAcyclic());
+            _graph.IsAcyclic();
         }
         [TestMethod]
         public void IsCyclicTwoArmedGraph()
@@ -198,7 +199,7 @@ namespace Graphtesting
         public void IsCyclic()
         {
             Initialize();
-            Assert.IsTrue(_graph.IsAcyclic());
+            Assert.IsFalse(_graph.IsAcyclic());
         }
 
         [TestMethod]

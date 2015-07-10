@@ -15,11 +15,11 @@ namespace Graphtesting
         public void Initialize()
         {
             _graph = new DirectedGraph<string, string>();
-            _vertex1 = _graph.CreateVertex("A");
-            _vertex2 = _graph.CreateVertex("B");
-            _vertex3 = _graph.CreateVertex("C");
-            _vertex4 = _graph.CreateVertex("D");
-            _vertex5 = _graph.CreateVertex("E");
+            _vertex1 = _graph.CreateVertex("Penis");
+            _vertex2 = _graph.CreateVertex("Tomato");
+            _vertex3 = _graph.CreateVertex("Isa");
+            _vertex4 = _graph.CreateVertex("Robin");
+            _vertex5 = _graph.CreateVertex("Außenseiter");
 
             _edge1 = _graph.AddEdge(_vertex1, _vertex2);
             _edge2 = _graph.AddEdge(_vertex2, _vertex3);
@@ -144,10 +144,11 @@ namespace Graphtesting
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NoVertexException))]
         public void IsCyclicNullGraph()
         {
             InitializeNullGraph();
-            Assert.IsTrue(_graph.IsAcyclic());
+            _graph.IsAcyclic();
         }
         [TestMethod]
         public void IsCyclicTwoArmedGraph()
